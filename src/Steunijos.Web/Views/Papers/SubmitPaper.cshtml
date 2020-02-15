@@ -1,0 +1,42 @@
+﻿@model Steunijos.Web.ViewModels.Paper.SubmitPaper
+
+@{
+    ViewData["Title"] = "SubmitPaper";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Submit Your Paper</h1>
+
+<hr />
+<div class="container">
+        <div class="row">
+            <div class="col-md-4">
+
+                <form asp-controller="Papers" asp-action="SubmitPaper" enctype="multipart/form-data" method="post">
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                    <div class="form-group">
+                        <label asp-for="PaperTopic" class="control-label"></label>
+                        <input asp-for="PaperTopic" class="form-control" />
+                        <span asp-validation-for="PaperTopic" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Upload Paper</label>
+                        <input asp-for="File" type="file" name="file" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </form>
+            </div>
+        </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@*@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}*@

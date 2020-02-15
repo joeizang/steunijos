@@ -1,0 +1,96 @@
+﻿@model IEnumerable<Steunijos.Web.Models.Paper>
+
+@{
+    ViewData["Title"] = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>View</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            @*<th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SavedPath)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaperAbstract)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaperOriginalName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ActualPath)
+            </th>*@
+            <th>
+                @Html.DisplayNameFor(model => model.NumberOfPages)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaperTopic)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Journal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedAt)
+            </th>
+            @*<th>
+                @Html.DisplayNameFor(model => model.UpdatedAt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ThumbnailPath)
+            </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SavedPath)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaperAbstract)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaperOriginalName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ActualPath)
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.NumberOfPages)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaperTopic)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Journal.IssnNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedAt)
+            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => item.UpdatedAt)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ThumbnailPath)
+            </td>*@
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.PaperId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.PaperId">Details</a> |
+                @*<a asp-action="Delete" asp-route-id="@item.PaperId">Delete</a>*@
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

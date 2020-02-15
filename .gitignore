@@ -3,3 +3,7 @@
 ################################################################################
 
 /src/Steunijos.Web/.config
+/.vs/steunijos/v16
+/src/Steunijos.Web/bin
+/src/Steunijos.Web/Properties
+/src/Steunijos.Web/obj

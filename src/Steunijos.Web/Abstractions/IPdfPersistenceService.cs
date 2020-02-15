@@ -1,0 +1,14 @@
+﻿using Steunijos.Web.Models;
+using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Steunijos.Web.Abstractions
+{
+    public interface IPdfPersistenceService : IFilePersistenceService<PdfFiletype>
+    {
+
+    }
+}
