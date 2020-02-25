@@ -14,7 +14,7 @@ namespace Steunijos.Web.ViewModels.Paper
 
         public string Author { get; set; }
 
-        public DateTimeOffset DateUploaded { get; set; }
+        //public DateTimeOffset DateUploaded { get; set; }
 
         public IFormFile File { get; set; }
     }
