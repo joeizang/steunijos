@@ -320,6 +320,7 @@ img {
     position: relative;
     padding: 1rem 1rem;
     border-radius: 5px;
+    background: rgba(51,122,183,1);
 }
 
 .fixed-top {
@@ -556,7 +557,7 @@ img {
 
 .icon-block {
     margin-right: 20px;
-    color:#21c87a;
+    color:#2179c9;
     font-size: 40px;
     line-height: 20px;
     font-weight: 400;
@@ -618,18 +619,18 @@ img {
     position: relative;
 }
 
-.img-icon-block:before {
-    position: absolute;
-    content: "";
-    top: -27px;
-    background-color: #21c87a;
-    opacity: .3;
-    width: 80px;
-    right: 70px;
-    height: 80px;
-    border-radius: 50%;
-    z-index: 1;
-}
+    .img-icon-block:before {
+        position: absolute;
+        content: "";
+        top: -27px;
+        background-color: #2179c9;
+        opacity: .3;
+        width: 80px;
+        right: 70px;
+        height: 80px;
+        border-radius: 50%;
+        z-index: 1;
+    }
 
 .img-icon-block i{
     font-size: 58px;
@@ -642,7 +643,7 @@ img {
  SERVICE
 -----------------------*/
 h5.subtitle {
-    color: #21c87a;
+    color: #2179c9;
     margin-bottom: 10px;
     font-weight: 300;
 }
@@ -668,7 +669,7 @@ h5.subtitle {
     font-size: 25px;
     width: 50px;
     height: 50px;
-    background: #21c87a;
+    background: #2179c9;
     text-align: center;
     border-radius: 50%;
     padding-top: 5px;
@@ -761,9 +762,9 @@ h5.subtitle {
     border-color: transparent;
 }
 
-.web-service-block:hover i {
-    color: #21c87a;
-}
+    .web-service-block:hover i {
+        color: #2179c9;
+    }
 
 .web-service-block:hover h3 {
     color: #111;
@@ -820,14 +821,14 @@ h5.subtitle {
     position: relative;
     padding-left: 30px;
 }
-.price-features li:before{
-    position: absolute;
-    content:"\f05d";
-    font-family: "FontAwesome";
-    left: 0px;
-    top: 5px;
-    color: #21c87a;
-}
+    .price-features li:before {
+        position: absolute;
+        content: "\f05d";
+        font-family: "FontAwesome";
+        left: 0px;
+        top: 5px;
+        color: #2179c9;
+    }
 
 .pricing-block .price-features li{
     padding-left: 0px;
@@ -901,9 +902,9 @@ h5.subtitle {
     box-shadow: 0 7px 22px rgba(0, 0, 0, 0.08);
 }
 
-.project-content-block h4 {
-    color: #21c87a;
-}
+    .project-content-block h4 {
+        color: #2179c9;
+    }
 
 .project-content-block p {
     margin-top: 25px;
@@ -996,7 +997,7 @@ SECTION TESTIMONIAL
 }
 
 .blog-content:hover a h3 {
-    color: #21c87a;
+    color: #2179c9;
 }
 
 
@@ -1070,7 +1071,7 @@ SECTION TESTIMONIAL
 }
 
 .current-year {
-    color: #21c87a !important;
+    color: #2179c9 !important;
 }
 
 .footer-copy:before {
@@ -1089,17 +1090,16 @@ SECTION TESTIMONIAL
  SCROLL TO TOP
 --------------------------------*/
 
-.scroll-to-top{
+.scroll-to-top {
     position: fixed;
     content: "";
     right: 30px;
     bottom: 50px;
     z-index: 999;
-    background: #21c87a;
-    color: #fff!important;
+    background: #2179c9;
+    color: #fff !important;
     border-radius: 100%;
     opacity: 0;
-    
 }
 
 .scroll-to-top i{
@@ -1174,9 +1174,9 @@ ABOUT
       -webkit-box-shadow: 0 7px 22px rgba(0, 0, 0, 0.08);
     box-shadow: 0 7px 22px rgba(0, 0, 0, 0.08);
 }
-#about .img-block img{
-    border: 5px solid #21c87a;
-}
+    #about .img-block img {
+        border: 5px solid #2179c9;
+    }
 .pt-6{
     padding-top: 4.5rem;
 }
@@ -1242,7 +1242,7 @@ PRICING
     border-radius: 5px;
 }
 
-.overlay-content-block a{
+.overlay-content-block a {
     width: 50px;
     height: 50px;
     display: inline-block;
@@ -1252,7 +1252,7 @@ PRICING
     position: absolute;
     left: 30px;
     top: -23px;
-    background: #21c87a;
+    background: #2179c9;
     color: #fff;
 }
 
@@ -1452,15 +1452,15 @@ CONTACT PAGE
 .contact-info-block h4{
     margin-bottom: 0px;
 }
-.contact-info-block i{
-    font-size: 40px;
-    margin-bottom: 20px;
-    display: block;
-    color: #21c87a;
-}
+    .contact-info-block i {
+        font-size: 40px;
+        margin-bottom: 20px;
+        display: block;
+        color: #2179c9;
+    }
 
-.form-control:focus,.form-control:hover{
-    border-color: #21c87a;
+.form-control:focus, .form-control:hover {
+    border-color: #2179c9;
     box-shadow: none;
 }
 

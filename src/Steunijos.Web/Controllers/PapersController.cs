@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
+using Steunijos.Web.Models;
 
 namespace Steunijos.Web.Controllers
 {
@@ -91,6 +92,14 @@ namespace Steunijos.Web.Controllers
                 {
                     await submitPaper.File.CopyToAsync(fstream);
                 }
+
+                //var paper = new Paper();
+                //paper.Title = submitPaper.Title;
+                //paper.SubjectArea = new SubjectArea { SubjectAreaName = submitPaper.SubjectArea };
+                //paper.CreatedAt = submitPaper.DateUploaded;
+
+                //_db.Papers.Add(paper);
+                //await _db.SaveChangesAsync();
 
             }
             catch

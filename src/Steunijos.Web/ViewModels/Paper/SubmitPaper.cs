@@ -10,7 +10,11 @@ namespace Steunijos.Web.ViewModels.Paper
     {
         public string Title { get; set; }
 
-        public string PaperTopic { get; set; }
+        public string SubjectArea { get; set; }
+
+        public string Author { get; set; }
+
+        public DateTimeOffset DateUploaded { get; set; }
 
         public IFormFile File { get; set; }
     }
