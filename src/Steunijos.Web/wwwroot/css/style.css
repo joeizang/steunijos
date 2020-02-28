@@ -227,9 +227,24 @@ img {
     padding: 1.2rem 2.7rem;
     border: 0.1rem solid transparent;
     transition: all 0.2s ease-in-out;
-    letter-spacing: .5px
+    letter-spacing: .5px;
+    background-color: #4285f4;
+}
+.google-signin-btn {
+    color: #fff;
+    background-color: #4285f4;
+    border-color: #1861ac;
 }
 
+#g-btn-span {
+    background: url('~/img/g-logo.jpg') transparent 5px 40% no-repeat;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#g-btn:hover {
+    cursor: crosshair;
+}
 
 
 .btn-circle {

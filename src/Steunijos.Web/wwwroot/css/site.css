@@ -12,7 +12,7 @@ a {
   color: #0366d6;
 }
 
-.btn-primary {
+.btn-primary-blue {
   color: #fff;
   background-color: #1b6ec2;
   border-color: #1861ac;
@@ -49,6 +49,22 @@ html {
 button.accept-policy {
   font-size: 1rem;
   line-height: inherit;
+}
+
+.google-signin-btn {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+#g-btn-span {
+    background: url('~/img/g-logo.jpg') transparent 5px 40% no-repeat;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#g-btn:hover {
+    cursor: pointer;
 }
 
 /* Sticky footer styles
