@@ -17,6 +17,7 @@ using Steunijos.Web.Models;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Steunijos.Web.FrameworkExtensions;
 using Microsoft.AspNetCore.HttpOverrides;
+using Steunijos.Web.SteunijosServices;
 
 namespace Steunijos.Web
 {
@@ -40,7 +41,7 @@ namespace Steunijos.Web
                 .AddEntityFrameworkStores<SteunijosContext>();
             services.AddControllersWithViews();
             services.AddRazorPages();
-            
+
 
             services.AddSteUserOptions();
 
@@ -53,6 +54,8 @@ namespace Steunijos.Web
                 options.ClientId = googleAuthNSection["ClientId"];
                 options.ClientSecret = googleAuthNSection["ClientSecret"];
             });
+
+            services.AddTransient<IGoogleDriveService, GoogleDriveService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

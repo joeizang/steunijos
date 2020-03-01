@@ -11,6 +11,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Steunijos.Web.Models;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Configuration;
+using Google.Apis.Auth.OAuth2;
+using Google.Apis.Drive.v3;
+using System.Threading;
+using Google.Apis.Services;
+using Steunijos.Web.SteunijosServices;
 
 namespace Steunijos.Web.Controllers
 {
@@ -18,56 +25,42 @@ namespace Steunijos.Web.Controllers
     {
         private readonly IHostEnvironment _env;
         private readonly SteunijosContext _db;
+        private readonly IGoogleDriveService _gds;
 
-        public PapersController(IHostEnvironment env, SteunijosContext db)
+        public PapersController(IHostEnvironment env,
+            SteunijosContext db,
+            IConfiguration config,
+            IGoogleDriveService gds)
         {
             _env = env;
             _db = db;
-        }
-
-
-        // GET: Paper
-        public async Task<ActionResult> Index(PaperInputModel model)
-        {
-            var deferredPapers = _db.Papers.AsNoTracking();
-            var filteredBySubjectArea = deferredPapers.Include(x => x.SubjectArea)
-                                        .OrderBy(p => p.SubjectArea.SubjectAreaName)
-                                        .ThenByDescending(p => p.SubjectArea.SubjectAreaName);
-            var filteredByDateSubmitted = deferredPapers.OrderBy(p => p.CreatedAt);
-            var filteredByAuthorName = deferredPapers.Include(x => x.Authors)
-                                        .OrderBy(p => p.Authors.Select(x => x.PaperAuthor.FirstName))
-                                        .ThenBy(p => p.Authors.Select(x => x.PaperAuthor.LastName));
-            if(model.SortCriterion == SortBy.Author_Name.ToString())
-            {
-                // Add pagination later for when the list of papers gets long.
-                var result = await filteredByAuthorName.ToListAsync();
-                return View(result);
-            }
-            if(model.SortCriterion == SortBy.Date_Submitted.ToString())
-            {
-                var result = await filteredByDateSubmitted.ToListAsync();
-                return View(result);
-            }
-            if (model.SortCriterion == SortBy.Subject_Area.ToString())
-            {
-                var result = await filteredBySubjectArea.ToListAsync();
-                return View(result);
-            }
-
-            return View(await deferredPapers.ToListAsync());
+            _gds = gds;
         }
 
         // GET: Paper/Details/5
         public ActionResult Details(string id)
         {
-            
+
             return View();
         }
 
         public ActionResult SubmitPaper()
         {
-            ViewBag.EnvPath = "..\\..\\"+_env;
-            return View("SubmitPaper");
+            var submitPaper = new SubmitPaper();
+            submitPaper.SubjectArea = new List<SelectListItem>{
+                new SelectListItem{ Text="Select a Subject Area", Value=""},
+                new SelectListItem{ Text="Biology Education", Value="Biology Education"},
+                new SelectListItem{ Text="Building Education", Value="Building Education"},
+                new SelectListItem{ Text="Chemistry Education", Value="Chemistry Education"},
+                new SelectListItem{ Text="Computer Science", Value="Computer Science"},
+                new SelectListItem{ Text="Electrical Technology", Value="Electrical Technology"},
+                new SelectListItem{ Text="Geography Education", Value="Geography Education"},
+                new SelectListItem{ Text="Integrated Science Education", Value="Integrated Science Education"},
+                new SelectListItem{ Text="Mathematics Education", Value="Mathematics Education"},
+                new SelectListItem{ Text="Welding Technology Education", Value="Welding Technology Education"},
+
+            };
+            return View(submitPaper);
         }
 
         // GET: Paper/Create
@@ -81,32 +74,25 @@ namespace Steunijos.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SubmitPaper(SubmitPaper submitPaper)
         {
+
             try
             {
                 var dir = $"{_env.ContentRootPath}";
                 ViewBag.EnvPath = dir;
                 var combinedPath = Path.Combine(dir, submitPaper.File.FileName);
 
-                using(var fstream = new FileStream(combinedPath, 
+                using (var fstream = new FileStream(combinedPath,
                     FileMode.Create, FileAccess.Write))
                 {
                     await submitPaper.File.CopyToAsync(fstream);
                 }
-
-                //var paper = new Paper();
-                //paper.Title = submitPaper.Title;
-                //paper.SubjectArea = new SubjectArea { SubjectAreaName = submitPaper.SubjectArea };
-                //paper.CreatedAt = submitPaper.DateUploaded;
-
-                //_db.Papers.Add(paper);
-                //await _db.SaveChangesAsync();
 
             }
             catch
             {
                 return View();
             }
-                return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Paper/Edit/5
