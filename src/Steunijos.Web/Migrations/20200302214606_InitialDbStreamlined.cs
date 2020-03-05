@@ -1,9 +1,10 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Steunijos.Web.Migrations
 {
-    public partial class initialDB : Migration
+    public partial class InitialDbStreamlined : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +15,8 @@ namespace Steunijos.Web.Migrations
                     Id = table.Column<string>(nullable: false),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true)
+                    ConcurrencyStamp = table.Column<string>(nullable: true),
+                    Discriminator = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -51,7 +53,7 @@ namespace Steunijos.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -127,10 +129,9 @@ namespace Steunijos.Web.Migrations
                     PaperId = table.Column<string>(nullable: false),
                     Title = table.Column<string>(nullable: true),
                     SavedPath = table.Column<string>(nullable: true),
-                    PaperAbstract = table.Column<string>(nullable: true),
+                    AuthorName = table.Column<string>(nullable: true),
                     PaperOriginalName = table.Column<string>(nullable: true),
                     ActualPath = table.Column<string>(nullable: true),
-                    NumberOfPages = table.Column<int>(nullable: false),
                     SubjectAreaId = table.Column<string>(nullable: true),
                     PaperTopic = table.Column<string>(nullable: true),
                     JournalId = table.Column<string>(nullable: true),
@@ -160,7 +161,7 @@ namespace Steunijos.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -289,32 +290,6 @@ namespace Steunijos.Web.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "AuthorsPapers",
-                columns: table => new
-                {
-                    PaperAuthorId = table.Column<string>(nullable: false),
-                    PaperId = table.Column<string>(nullable: false),
-                    CreatedAt = table.Column<DateTimeOffset>(nullable: false),
-                    UpdatedAt = table.Column<DateTimeOffset>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AuthorsPapers", x => new { x.PaperAuthorId, x.PaperId });
-                    table.ForeignKey(
-                        name: "FK_AuthorsPapers_AspNetUsers_PaperAuthorId",
-                        column: x => x.PaperAuthorId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AuthorsPapers_Papers_PaperId",
-                        column: x => x.PaperId,
-                        principalTable: "Papers",
-                        principalColumn: "PaperId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -356,11 +331,6 @@ namespace Steunijos.Web.Migrations
                 name: "IX_AspNetUsers_JournalIssnNo",
                 table: "AspNetUsers",
                 column: "JournalIssnNo");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_AuthorsPapers_PaperId",
-                table: "AuthorsPapers",
-                column: "PaperId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_JournalContents_AuthorId",
@@ -406,10 +376,10 @@ namespace Steunijos.Web.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "AuthorsPapers");
+                name: "JournalContents");
 
             migrationBuilder.DropTable(
-                name: "JournalContents");
+                name: "Papers");
 
             migrationBuilder.DropTable(
                 name: "Payments");
@@ -418,13 +388,10 @@ namespace Steunijos.Web.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Papers");
+                name: "SubjectArea");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "SubjectArea");
 
             migrationBuilder.DropTable(
                 name: "Journals");

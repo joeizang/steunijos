@@ -7,27 +7,27 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Steunijos.Web.Controllers
 {
-    public class JournalController : Controller
+    public class EditorsController : Controller
     {
-        // GET: Journal
+        // GET: Editors
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: Journal/Details/5
+        // GET: Editors/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: Journal/Create
+        // GET: Editors/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Journal/Create
+        // POST: Editors/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -44,13 +44,13 @@ namespace Steunijos.Web.Controllers
             }
         }
 
-        // GET: Journal/Edit/5
+        // GET: Editors/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Journal/Edit/5
+        // POST: Editors/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -67,13 +67,13 @@ namespace Steunijos.Web.Controllers
             }
         }
 
-        // GET: Journal/Delete/5
+        // GET: Editors/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Journal/Delete/5
+        // POST: Editors/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

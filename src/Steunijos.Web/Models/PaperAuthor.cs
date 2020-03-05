@@ -21,9 +21,5 @@ namespace Steunijos.Web.Models
 
         public List<PaperPayment> Payments { get; set; }
 
-        public List<AuthorsPapers> Papers { get; set; }
-
-
-
     }
 };

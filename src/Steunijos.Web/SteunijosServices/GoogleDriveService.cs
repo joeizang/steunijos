@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Drive.v3;
+using Google.Apis.Drive.v3.Data;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using Microsoft.AspNetCore.Http;
@@ -19,6 +20,9 @@ namespace Steunijos.Web.SteunijosServices
         ClientSecrets ClientSecrets { get; set; }
         UserCredential UserCred { get; }
         DriveService GDriveService { get; }
+
+        List<GoogleDriveFileEntry> GetDriveFiles();
+        Task<bool> UploadToGDriveAsync(string file);
     }
 
     public class GoogleDriveService : IGoogleDriveService
@@ -42,17 +46,17 @@ namespace Steunijos.Web.SteunijosServices
             _env = env;
             ClientSecrets.ClientId = _config.GetValue<string>("AuthGoogle:clientId");
             ClientSecrets.ClientSecret = _config.GetValue<string>("AuthGoogle:clientSecret");
-            UserCred = ConnectToGoogleDrive(_env).Result;
-            GDriveService = new DriveService(new BaseClientService.Initializer()
-            {
-                HttpClientInitializer = UserCred,
-                ApplicationName = "steunijos"
-            });
+            // UserCred = ConnectToGoogleDrive(_env).Result;
+            // GDriveService = new DriveService(new BaseClientService.Initializer()
+            // {
+            //     HttpClientInitializer = UserCred,
+            //     ApplicationName = "steunijos"
+            // });
         }
         private async Task<UserCredential> ConnectToGoogleDrive(IHostEnvironment env)
         {
             UserCredential result;
-            using (var fStream = new FileStream($"{env.ContentRootPath}clientGoogle.json",
+            using (var fStream = new FileStream($"{env.ContentRootPath}\\clientGoogle.json",
                             FileMode.Open, FileAccess.Read))
             {
                 var folderPath = env.ContentRootPath;
@@ -91,24 +95,24 @@ namespace Steunijos.Web.SteunijosServices
             return results;
         }
 
-        public async Task UploadToGDriveAsync(IFormFile file)
+        public async Task<bool> UploadToGDriveAsync(string file)
         {
-            try
+            var gFile = new Google.Apis.Drive.v3.Data.File();
+            gFile.Name = Path.GetFileName(file);
+            gFile.MimeType = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+
+            FilesResource.CreateMediaUpload uploadRequest;
+            using (var stream = new FileStream(file, FileMode.Open, FileAccess.Read))
             {
-                var dir = $"{_env.ContentRootPath}";
-                var combinedPath = Path.Combine(dir, file.FileName);
-
-                using (var fstream = new FileStream(combinedPath,
-                    FileMode.Create, FileAccess.Write))
-                {
-                    await file.CopyToAsync(fstream);
-                }
-
+                uploadRequest = GDriveService.Files.Create(gFile, stream, gFile.MimeType);
+                uploadRequest.Fields = "id";
+                await uploadRequest.UploadAsync().ConfigureAwait(false);
             }
-            catch
-            {
 
-            }
+            //if upload wasn't successful the Id will be empty, return false else return true;
+            if (string.IsNullOrEmpty(uploadRequest.ResponseBody.Id))
+                return false;
+            return true;
         }
     }
 }

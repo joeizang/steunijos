@@ -36,11 +36,9 @@
     ================================================= -->
     <nav class="navbar navbar-expand-lg navbar-dark trans-navigation fixed-top navbar-togglable">
         <div class="container">
-            <a asp-controller="/" class="navbar-brand" asp-action="Index">
+            <a asp-controller="Home" class="navbar-brand" asp-action="Index" id="brand">
                 <h3>Department Of</h3>
                 <h3>Science. & Tech <span>Uni. Jos</span></h3>
-
-
             </a>
             <!-- Toggler -->
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -88,19 +86,19 @@
 
                     <li class="nav-item ">
                         <a asp-controller="Papers" asp-action="SubmitPaper" class="nav-link js-scroll-trigger">
-                            Paper Submissions
+                            Papers
                         </a>
                     </li>
 
                     <li class="nav-item ">
                         <a asp-controller="Editors" asp-action="Index" class="nav-link">
-                            Editorial Team
+                            Editors
                         </a>
                     </li>
 
                     <li class="nav-item ">
                         <a asp-controller="Contact" asp-action="Index" class="nav-link">
-                            Contact Us
+                            ContactUs
                         </a>
                     </li>
                     <li></li>
@@ -127,7 +125,6 @@
                         <a href="#" class="footer-brand text-white">
                             Department of Science & Technology Education, University of Jos.
                         </a>
-                        <p>Each theme featured at the marketplace has been reviewed by our creators.</p>
                     </div>
                 </div>
 
@@ -136,7 +133,7 @@
                         <h3>Account</h3>
                         <!-- Links -->
                         <ul class="footer-links ">
-                            <li>
+                            @*<li>
                                 <a href="#">
                                     Terms and conditions
                                 </a>
@@ -150,7 +147,7 @@
                                 <a href="#">
                                     Affiliate services
                                 </a>
-                            </li>
+                            </li>*@
                             <li>
                                 <a href="#">
                                     Help and support
@@ -171,17 +168,17 @@
                         <h3>About</h3>
                         <!-- Links -->
                         <ul class="footer-links ">
-                            <li>
+                            @*<li>
                                 <a href="#">
                                     Services
                                 </a>
-                            </li>
+                            </li>*@
                             <li>
                                 <a href="#">
                                     About Us
                                 </a>
                             </li>
-                            <li>
+                            @*<li>
                                 <a href="#">
                                     Pricing
                                 </a>
@@ -190,7 +187,7 @@
                                 <a href="#">
                                     Products Shop
                                 </a>
-                            </li>
+                            </li>*@
 
                             <li>
                                 <a href="#">
@@ -206,7 +203,7 @@
                         <h3>Socials</h3>
                         <!-- Links -->
                         <ul class="list-unstyled footer-links">
-                            <li><a href="#"><i class="fab fa-facebook-f"></i>Facebook</a></li>
+                            @*<li><a href="#"><i class="fab fa-facebook-f"></i>Facebook</a></li>
                             <li>
                                 <a href="#">
                                     <i class="fab fa-twitter"></i>Twitter
@@ -221,7 +218,7 @@
                                 <a href="#">
                                     <i class="fab fa-youtube"></i>YouTube
                                 </a>
-                            </li>
+                            </li>*@
                         </ul>
                     </div>
                 </div>

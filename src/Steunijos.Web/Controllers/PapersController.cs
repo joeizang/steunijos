@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Steunijos.Web.Data;
-using Steunijos.Web.ViewModels;
 using Steunijos.Web.ViewModels.Paper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +12,6 @@ using Microsoft.Extensions.Hosting;
 using Steunijos.Web.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Configuration;
-using Google.Apis.Auth.OAuth2;
-using Google.Apis.Drive.v3;
-using System.Threading;
-using Google.Apis.Services;
 using Steunijos.Web.SteunijosServices;
 
 namespace Steunijos.Web.Controllers
@@ -25,7 +20,7 @@ namespace Steunijos.Web.Controllers
     {
         private readonly IHostEnvironment _env;
         private readonly SteunijosContext _db;
-        private readonly IGoogleDriveService _gds;
+        //private readonly IGoogleDriveService _gds;
 
         public PapersController(IHostEnvironment env,
             SteunijosContext db,
@@ -34,7 +29,25 @@ namespace Steunijos.Web.Controllers
         {
             _env = env;
             _db = db;
-            _gds = gds;
+            //_gds = gds;
+        }
+
+        public async Task<ActionResult> Index()
+        {
+            var result = await _db.Papers.AsNoTracking()
+                .Include(p => p.SubjectArea)
+                .Select(p => new PaperIndexViewModel
+                {
+                    AuthorName = p.AuthorName,
+                    PaperId = p.PaperId,
+                    PaperTitle = p.Title,
+                    SubjectArea = p.SubjectArea.SubjectAreaName,
+                    SubmissionDate = p.CreatedAt
+                })
+                .ToListAsync()
+                .ConfigureAwait(false);
+
+            return View(result);
         }
 
         // GET: Paper/Details/5
@@ -46,8 +59,10 @@ namespace Steunijos.Web.Controllers
 
         public ActionResult SubmitPaper()
         {
-            var submitPaper = new SubmitPaper();
-            submitPaper.SubjectArea = new List<SelectListItem>{
+            var submitPaper = new SubmitPaper
+            {
+                SubjectArea = new List<SelectListItem>
+                {
                 new SelectListItem{ Text="Select a Subject Area", Value=""},
                 new SelectListItem{ Text="Biology Education", Value="Biology Education"},
                 new SelectListItem{ Text="Building Education", Value="Building Education"},
@@ -57,16 +72,11 @@ namespace Steunijos.Web.Controllers
                 new SelectListItem{ Text="Geography Education", Value="Geography Education"},
                 new SelectListItem{ Text="Integrated Science Education", Value="Integrated Science Education"},
                 new SelectListItem{ Text="Mathematics Education", Value="Mathematics Education"},
-                new SelectListItem{ Text="Welding Technology Education", Value="Welding Technology Education"},
-
+                new SelectListItem{ Text="Welding Technology Education", Value="Welding Technology Education"}
+                }
             };
-            return View(submitPaper);
-        }
 
-        // GET: Paper/Create
-        public ActionResult Create()
-        {
-            return View();
+            return View(submitPaper);
         }
 
         // POST: Paper/Create
@@ -78,21 +88,51 @@ namespace Steunijos.Web.Controllers
             try
             {
                 var dir = $"{_env.ContentRootPath}";
-                ViewBag.EnvPath = dir;
-                var combinedPath = Path.Combine(dir, submitPaper.File.FileName);
+                var uploadPath = Path.Combine(dir, "Uploads");
+                var mod = $"{DateTimeOffset.UtcNow.LocalDateTime.Ticks}-{submitPaper.File.FileName}";
+                var combinedPath = Path.Combine(uploadPath, mod);
 
-                using (var fstream = new FileStream(combinedPath,
-                    FileMode.Create, FileAccess.Write))
+                using (var fstream = new FileStream(combinedPath, FileMode.Create, FileAccess.Write))
                 {
+
                     await submitPaper.File.CopyToAsync(fstream);
+                    var fileInfo = new FileInfo(combinedPath);
+
+                    //rename the file on disk to a new name
+
+                    var copyPath = Path.Combine(uploadPath, $"{DateTimeOffset.Now.Ticks.ToString()}-{Guid.NewGuid().ToString()}{fileInfo.Extension}");
+                    fileInfo.CopyTo(copyPath);
+
+                    //save paper to db after taking all the info from submitPaper
+                    var paper = new Paper
+                    {
+                        PaperId = Guid.NewGuid().ToString(),
+                        Title = submitPaper.Title,
+                        ActualPath = $"{combinedPath}",
+                        SavedPath = copyPath,
+                        SubjectArea = new SubjectArea
+                        {
+                            SubjectAreaId = Guid.NewGuid().ToString(),
+                            SubjectAreaName = submitPaper.SubjectAreaSelected
+                        },
+                        PaperOriginalName = submitPaper.File.FileName,
+                        CreatedAt = submitPaper.DateUploaded,
+                        AuthorName = submitPaper.Author
+                    };
+
+                    _db.Papers.Add(paper);
+                    var pId = await _db.SaveChangesAsync().ConfigureAwait(false);
                 }
 
             }
-            catch
+            catch (Exception e)
             {
+                ViewBag.ErrorMessage = e.Message;
                 return View();
             }
-            return RedirectToAction(nameof(Index));
+
+            ViewBag.Message = "Upload Successful!";
+            return RedirectToRoute(new { controller = "Papers", action = "Index" });
         }
 
         // GET: Paper/Edit/5

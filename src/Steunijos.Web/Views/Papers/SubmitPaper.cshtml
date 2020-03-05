@@ -7,37 +7,25 @@
 
     <section class="section">
         <h1>Submit Your Paper</h1>
-
         <hr />
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
 
-                    <form asp-controller="Papers" asp-action="SubmitPaper" enctype="multipart/form-data" method="post">
+                    <form asp-controller="Papers" asp-action="SubmitPaper" enctype="multipart/form-data" 
+                          method="post">
 
                         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-                        <div class="form-group">
-                            <label asp-for="SubjectArea" class="control-label"></label>
-                            @* <select class="form-control">
-                                <option value="">Select Subject Area</option>
-                                <option value="Biology_Education">Biology Education</option>
-                                <option value="Building_Education">Building Education</option>
-                                <option value="Chemistry_Education">Chemistry Education</option>
-                                <option value="Computer_Science">Computer Science</option>
-                                <option value="Electrical_Technology">Electrical Technology</option>
-                                <option value="Geography_Education">Geography Education</option>
-                                <option value="Integrated_Science_Education">Integrated Science Education</option>
-                                <option value="Mathematics_Education">Mathematics Education</option>
-                                <option value="Welding_Technology_Education">Welding Technology Education</option>
-                            </select> *@
+                        @*<div class="form-group">
+                            <label asp-for="SubjectAreaSelected" class="control-label"></label>
                             <select asp-for="SubjectAreaSelected" 
-                            asp-items="Model.SubjectArea" class="form-control">
+                                asp-items="Model.SubjectArea" class="form-control">
                             </select>
-                            @* @Html.DropDownListFor(drop => drop.SubjectArea, 
-                            new SelectList(Model.SubjectArea, "Value", "Text"), new { @class="form-control" }) *@
                             <span asp-validation-for="SubjectArea" class="text-danger"></span>
-                        </div>
+                        </div>*@
+                        <span class="text-danger">@ViewBag.ErrorMessage</span>
+                        <span class="alert alert-success">@ViewBag.Message</span>
                         <div class="form-group">
                             <label asp-for="Title" class="control-label"></label>
                             <input asp-for="Title" class="form-control" />

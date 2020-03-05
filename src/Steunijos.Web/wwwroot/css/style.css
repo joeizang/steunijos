@@ -149,12 +149,14 @@ p {
 }
 
 a{
-    color: #21c87a;
+    /*color: #21c87a;*/
+    color: #ffffff;
 }
 a:hover,a:focus{
     outline: none;
     text-decoration:  none;
 }
+
 
 .mb-6{
     margin-bottom: 2rem !important;

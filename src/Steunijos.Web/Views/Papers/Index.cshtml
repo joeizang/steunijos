@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Steunijos.Web.Models.Paper>
+﻿@model IEnumerable<Steunijos.Web.ViewModels.Paper.PaperIndexViewModel>
 
 @{
     ViewData["Title"] = "View";
@@ -17,16 +17,16 @@
                         <thead>
                             <tr>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.NumberOfPages)
-                                </th>
+                                    @Html.DisplayNameFor(model => model.PaperTitle)
+                                </th> 
                                 <th>
-                                    @Html.DisplayNameFor(model => model.PaperTopic)
+                                    @Html.DisplayNameFor(model => model.AuthorName)
                                 </th>
+                                 <th>
+                                    @Html.DisplayNameFor(model => model.SubjectArea)
+                                </th> 
                                 <th>
-                                    @Html.DisplayNameFor(model => model.Journal)
-                                </th>
-                                <th>
-                                    @Html.DisplayNameFor(model => model.CreatedAt)
+                                    @Html.DisplayNameFor(model => model.SubmissionDate)
                                 </th>
                                 <th></th>
                             </tr>
@@ -36,23 +36,22 @@
                             {
                                 <tr>
                                 
+                                     <td>
+                                        @Html.DisplayFor(modelItem => item.PaperTitle)
+                                    </td> 
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.NumberOfPages)
+                                        @Html.DisplayFor(modelItem => item.AuthorName)
                                     </td>
+                                     <td>
+                                        @Html.DisplayFor(modelItem => item.SubjectArea)
+                                    </td> 
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.PaperTopic)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.Journal.IssnNo)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(modelItem => item.CreatedAt)
+                                        @Html.DisplayFor(modelItem => item.SubmissionDate)
                                     </td>
                                  
                                     <td>
-                                        <a asp-action="Edit" asp-route-id="@item.PaperId">Edit</a> |
-                                        <a asp-action="Details" asp-route-id="@item.PaperId">Details</a> |
-                                        @*<a asp-action="Delete" asp-route-id="@item.PaperId">Delete</a>*@
+                                        <a asp-action="Details" class="btn btn-primary"
+                                           asp-route-id="@item.PaperId">Details</a>
                                     </td>
                                 </tr>
                             }

@@ -20,13 +20,6 @@ namespace Steunijos.Web.Data
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<AuthorsPapers>().HasKey(key => new { key.PaperAuthorId, key.PaperId });
-
-            builder.Entity<Paper>()
-                .HasMany(p => p.Authors);
-            builder.Entity<PaperAuthor>()
-                .HasMany(a => a.Papers);
-
             builder.Entity<PaperAuthor>()
                 .HasMany(a => a.Payments);
         }
@@ -42,8 +35,6 @@ namespace Steunijos.Web.Data
         public DbSet<Paper> Papers { get; set; }
 
         public DbSet<JournalContent> JournalContents { get; set; }
-
-        public DbSet<AuthorsPapers> AuthorsPapers { get; set; }
 
         public DbSet<ApplicationRole> SteRoles { get; set; }
 

@@ -7,10 +7,14 @@ namespace Steunijos.Web.ViewModels.Paper
 {
     public class PaperIndexViewModel
     {
-        public string SearchString { get; set; }
+        public string PaperTitle { get; set; }
 
-        public string SortOrder { get; set; }
+        public string AuthorName { get; set; }
 
-        public SortBy SortBy { get; set; }
+        public DateTimeOffset SubmissionDate { get; set; }
+
+        public string SubjectArea { get; set; }
+
+        public string PaperId { get; set; }
     }
 }

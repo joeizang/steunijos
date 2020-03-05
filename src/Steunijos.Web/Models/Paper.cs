@@ -9,17 +9,13 @@ namespace Steunijos.Web.Models
 
         public string Title { get; set; }
 
-        public List<AuthorsPapers> Authors { get; set; }
-
         public string SavedPath { get; set; }
 
-        public string PaperAbstract { get; set; }
+        public string AuthorName { get; set; }
 
         public string PaperOriginalName { get; set; }
 
         public string ActualPath { get; set; }
-
-        public int NumberOfPages { get; set; }
 
         public SubjectArea SubjectArea { get; set; }
 
@@ -28,8 +24,6 @@ namespace Steunijos.Web.Models
         public string PaperTopic { get; set; }
 
         public string JournalId { get; set; }
-
-        public Journal Journal { get; set; }
 
         public DateTimeOffset CreatedAt { get; set; }
 

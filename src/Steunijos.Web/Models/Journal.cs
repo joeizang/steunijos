@@ -13,12 +13,14 @@ namespace Steunijos.Web.Models
 
         public string VolumeName { get; set; }
 
+        public string ActualPath { get; set; }
+
+        public string SavedPath { get; set; }
+
         public DateTimeOffset CopyrightYear { get; set; }
 
-        public List<Editor> Editors { get; set; }
+        public DateTimeOffset CreatedAt { get; set; }
 
-        public List<Paper> Papers { get; set; }
 
-        public List<JournalContent> TableOfContents { get; set; }
     }
 }
