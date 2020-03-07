@@ -51,8 +51,8 @@ namespace Steunijos.Web.Controllers
                     {
                         //finish this off.d
                     }
-                })
-            })
+                });
+            });
 
             return View(journals);
         }
