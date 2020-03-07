@@ -1,26 +1,60 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Steunijos.Web.Data;
 using Steunijos.Web.Models;
+using Steunijos.Web.ViewModels.Journal;
+using ThumbnailsGenie;
 
 namespace Steunijos.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly SteunijosContext _db;
+        private readonly IHostEnvironment _env;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(SteunijosContext db, IHostEnvironment env)
         {
-            _logger = logger;
+            _db = db;
+            _env = env;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var path = Path.Combine(_env.ContentRootPath, "Uploads", "Journals");
+            var thumb = new IconThumbnail();
+            var dir = new DirectoryInfo(path);
+            //Get Journals and how them on the homepage.
+            var journals = await _db.Journals.AsNoTracking()
+                              .Select(j => new JournalReadModel
+                              {
+                                  CopyrightYear = j.CopyrightYear,
+                                  IssnNo = j.IssnNo,
+                                  VolumeName = j.VolumeName
+                              }).ToListAsync().ConfigureAwait(false);
+
+            var pdfFiles = dir.EnumerateFiles()
+                           .Where(x => x.Extension.Equals("pdf"))
+                           .ToList();
+            journals.ForEach(j =>
+            {
+                pdfFiles.ForEach(p =>
+                {
+                    if (j.ActualFileName == p.Name)
+                    {
+                        //finish this off.
+                    }
+                })
+            })
+
+            return View(journals);
         }
 
         public IActionResult Privacy()

@@ -18,6 +18,8 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Steunijos.Web.FrameworkExtensions;
 using Microsoft.AspNetCore.HttpOverrides;
 using Steunijos.Web.SteunijosServices;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace Steunijos.Web
 {
@@ -80,6 +82,20 @@ namespace Steunijos.Web
 
             //app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            var cachePeriod = env.IsDevelopment() ? "600" : "604800";
+
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(Directory.GetCurrentDirectory(), "Uploads")
+                ),
+                RequestPath = "/AppUploads",
+                OnPrepareResponse = context =>
+                {
+                    context.Context.Response.Headers.Append("Cache-Control", $"public, max-age={cachePeriod}");
+                }
+            });
 
             app.UseRouting();
 

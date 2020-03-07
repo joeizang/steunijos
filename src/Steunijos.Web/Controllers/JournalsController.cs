@@ -33,7 +33,6 @@ namespace Steunijos.Web.Controllers
                 .Select(j => new JournalReadModel
                 {
                     IssnNo = j.IssnNo,
-                    SavedPath = j.SavedPath,
                     CopyrightYear = j.CopyrightYear,
                     VolumeName = j.VolumeName
                 }).ToListAsync()
@@ -64,7 +63,7 @@ namespace Steunijos.Web.Controllers
                 var dir = $"{_env.ContentRootPath}";
                 var uploadPath = Path.Combine(dir, "Uploads");
                 var journalPath = Path.Combine(uploadPath, "Journals");
-                var combinedPath = Path.Combine(journalPath, $"{inputModel.File.FileName}-{DateTimeOffset.UtcNow.LocalDateTime.Ticks}");
+                var combinedPath = Path.Combine(journalPath, $"{DateTimeOffset.UtcNow.LocalDateTime.Ticks}{inputModel.File.FileName}");
 
                 using (var fstream = new FileStream(combinedPath, FileMode.Create, FileAccess.Write))
                 {
@@ -74,7 +73,7 @@ namespace Steunijos.Web.Controllers
 
                     //rename the file on disk to a new name
 
-                    var copyPath = Path.Combine(journalPath, 
+                    var copyPath = Path.Combine(journalPath,
                         $"{DateTimeOffset.Now.Ticks.ToString()}-{Guid.NewGuid().ToString()}{fileInfo.Extension}");
                     fileInfo.CopyTo(copyPath);
 
@@ -83,7 +82,7 @@ namespace Steunijos.Web.Controllers
                     {
                         IssnNo = inputModel.JournalIssn,
                         ActualPath = $"{combinedPath}",
-                        SavedPath = copyPath,
+                        SavedPath = $"{Url.Content("~/AppUploads/Journals/")}{fileInfo.Name}",
                         CopyrightYear = inputModel.CopyrightYear,
                         CreatedAt = inputModel.UploadDate,
                         VolumeName = inputModel.JournalVolume
@@ -102,7 +101,7 @@ namespace Steunijos.Web.Controllers
 
             Message = "Journal upload successful!";
 
-            return RedirectToRoute(new {controller = "Home", action = "Index"});
+            return RedirectToRoute(new { controller = "Home", action = "Index" });
         }
 
         // GET: Journal/Edit/5

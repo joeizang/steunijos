@@ -11,7 +11,11 @@ namespace Steunijos.Web.ViewModels.Journal
 
         public string VolumeName { get; set; }
 
-        public string SavedPath { get; set; }
+        public string ActualFileName { get; set; }
+
+        public string SavedFileName { get; set; }
+
+        public string ThumbnailPath { get; set; }
 
         public DateTimeOffset CopyrightYear { get; set; }
     }
