@@ -88,7 +88,8 @@ namespace Steunijos.Web
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(
-                    Path.Combine(Directory.GetCurrentDirectory(), "Uploads")
+                    //Path.Combine(Directory.GetCurrentDirectory(), "Uploads")
+                    Path.Combine(env.ContentRootPath, "Uploads")
                 ),
                 RequestPath = "/AppUploads",
                 OnPrepareResponse = context =>
