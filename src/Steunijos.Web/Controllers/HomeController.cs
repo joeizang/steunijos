@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
@@ -18,9 +20,9 @@ namespace Steunijos.Web.Controllers
     public class HomeController : Controller
     {
         private readonly SteunijosContext _db;
-        private readonly IHostEnvironment _env;
+        private readonly IWebHostEnvironment _env;
 
-        public HomeController(SteunijosContext db, IHostEnvironment env)
+        public HomeController(SteunijosContext db, IWebHostEnvironment env)
         {
             _db = db;
             _env = env;
@@ -28,9 +30,10 @@ namespace Steunijos.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var path = Path.Combine(_env.ContentRootPath, "Uploads", "Journals");
+            var uploadPath = Path.Combine(_env.WebRootPath, "Uploads");
+            var jounalPath = Path.Combine(uploadPath, "Journals");
             var thumb = new IconThumbnail();
-            var dir = new DirectoryInfo(path);
+            var dir = new DirectoryInfo(jounalPath);
             //Get Journals and how them on the homepage.
             var journals = await _db.Journals.AsNoTracking()
                               .Select(j => new JournalReadModel
@@ -40,16 +43,26 @@ namespace Steunijos.Web.Controllers
                                   VolumeName = j.VolumeName
                               }).ToListAsync().ConfigureAwait(false);
 
-            var pdfFiles = dir.EnumerateFiles()
+            List<FileInfo> pdfFiles;
+
+            if (!dir.Exists)
+            {
+                ViewBag.DirError = "The Directory for journals doesn't exist!";
+                return View("Error");
+            }
+
+            pdfFiles = dir.EnumerateFiles()
                            .Where(x => x.Extension.Equals("pdf"))
                            .ToList();
+
             journals.ForEach(j =>
             {
                 pdfFiles.ForEach(p =>
                 {
-                    if (j.ActualFileName == p.Name)
+                    if (j.ActualFileName.Contains(p.Name) && p.Extension.Contains("pdf"))
                     {
                         //finish this off.d
+                        var thum = thumb.GetThumbnailForExtension(p.Extension, Thumbnails.Size.Px48);
                     }
                 });
             });

@@ -85,11 +85,32 @@ namespace Steunijos.Web
 
             var cachePeriod = env.IsDevelopment() ? "600" : "604800";
 
+            var path = Path.Combine(env.WebRootPath, "Uploads");
+            var paperPath = Path.Combine(env.WebRootPath, "Papers");
+
+            var dir = new DirectoryInfo(path);
+            try
+            {
+                if (!Directory.Exists(path))
+                {
+                    dir.Create();
+                }
+
+                if (!Directory.Exists(paperPath))
+                {
+                    Directory.CreateDirectory(paperPath);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"{ex.Message}");
+            }
+
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(
-                    //Path.Combine(Directory.GetCurrentDirectory(), "Uploads")
-                    Path.Combine(env.ContentRootPath, "Uploads")
+                    //Path.Combine(Directory.GetCurrentDirectory(), "Uploads") 
+                    path
                 ),
                 RequestPath = "/AppUploads",
                 OnPrepareResponse = context =>
