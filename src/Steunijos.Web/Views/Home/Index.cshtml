@@ -1,4 +1,4 @@
-﻿@model Steunijos.Web.ViewModels.Journal.JournalReadModel
+﻿@model IEnumerable<Steunijos.Web.ViewModels.Journal.JournalReadModel>
 @{
     ViewData["Title"] = "Home";
 }
@@ -92,37 +92,20 @@
 <section id="work" class="section-bottom">
     <div class="container">
         <div class="row">
-            <div class="col-lg-4 col-md-6 p-0">
-                <div class="work-block">
-                    <img src="~/img/work/10.jpg" alt="work-img" class="img-fluid">
-                    <div class="overlay-content-block">
-                        <h4>Probiz portfolio template</h4>
-                        <p>Put Journal Volume</p>
-                        <p>Put Journal ISSN Number</p>
-                        <a href="sdfs"><i class="fa fa-link"></i></a>
+            @foreach(var journal in Model)
+            {
+                <div class="col-lg-4 col-md-6 p-0">
+                    <div class="work-block">
+                        <img src="~/img/work/10.jpg" alt="work-img" class="img-fluid">
+                        <div class="overlay-content-block">
+                            <h4>@journal.CopyrightYear.Date.Year</h4>
+                            <p>@journal.VolumeName</p>
+                            <p>@journal.IssnNo</p>
+                            <a href="sdfs"><i class="fa fa-link"></i></a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-4 col-md-6 p-0">
-                <div class="work-block">
-                    <img src="~/img/work/11.jpg" alt="work-img" class="img-fluid">
-                    <div class="overlay-content-block">
-                        <h4>Probiz portfolio template</h4>
-                        <p>Web Development</p>
-                        <a href="single-project.html"><i class="fa fa-link"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 p-0">
-                <div class="work-block">
-                    <img src="~/img/work/12.jpg" alt="work-img" class="img-fluid">
-                    <div class="overlay-content-block">
-                        <h4>Probiz portfolio template</h4>
-                        <p>Web Development</p>
-                        <a href="single-project.html"><i class="fa fa-link"></i></a>
-                    </div>
-                </div>
-            </div>
+            }
         </div>
     </div>
 </section>

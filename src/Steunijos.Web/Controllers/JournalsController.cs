@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -16,12 +17,12 @@ namespace Steunijos.Web.Controllers
     public class JournalsController : Controller
     {
         private readonly SteunijosContext _db;
-        private readonly IHostEnvironment _env;
+        private readonly IWebHostEnvironment _env;
 
         [TempData]
         public string Message { get; set; }
 
-        public JournalsController(SteunijosContext db, IHostEnvironment env)
+        public JournalsController(SteunijosContext db, IWebHostEnvironment env)
         {
             _db = db;
             _env = env;
@@ -60,7 +61,7 @@ namespace Steunijos.Web.Controllers
         {
             try
             {
-                var dir = $"{_env.ContentRootPath}";
+                var dir = $"{_env.WebRootPath}";
                 var uploadPath = Path.Combine(dir, "Uploads");
                 var journalPath = Path.Combine(uploadPath, "Journals");
                 var combinedPath = Path.Combine(journalPath, $"{DateTimeOffset.UtcNow.LocalDateTime.Ticks}{inputModel.File.FileName}");

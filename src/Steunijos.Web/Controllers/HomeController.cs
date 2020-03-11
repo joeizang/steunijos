@@ -31,9 +31,9 @@ namespace Steunijos.Web.Controllers
         public async Task<IActionResult> Index()
         {
             var uploadPath = Path.Combine(_env.WebRootPath, "Uploads");
-            var jounalPath = Path.Combine(uploadPath, "Journals");
+            var journalPath = Path.Combine(uploadPath, "Journals");
             var thumb = new IconThumbnail();
-            var dir = new DirectoryInfo(jounalPath);
+            var dir = new DirectoryInfo(journalPath);
             //Get Journals and how them on the homepage.
             var journals = await _db.Journals.AsNoTracking()
                               .Select(j => new JournalReadModel
@@ -47,8 +47,7 @@ namespace Steunijos.Web.Controllers
 
             if (!dir.Exists)
             {
-                ViewBag.DirError = "The Directory for journals doesn't exist!";
-                return View("Error");
+                dir.Create();
             }
 
             pdfFiles = dir.EnumerateFiles()
