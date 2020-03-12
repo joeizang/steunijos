@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Steunijos.Web.ViewModels.Journal.JournalReadModel>
+﻿@* @model IEnumerable<Steunijos.Web.ViewModels.Journal.JournalReadModel> *@
 @{
     ViewData["Title"] = "Home";
 }
@@ -147,21 +147,46 @@
         </div> 
 
         <div class="row">
-            @foreach(var journal in Model)
-            {
                 <div class="col-lg-4 col-md-6 p-0">
                     <div class="work-block">
                         <img src="~/img/work/10.jpg" alt="work-img" class="img-fluid">
                         <div class="overlay-content-block">
-                            <h4>@journal.CopyrightYear.Date.Year</h4>
-                            <p>@journal.VolumeName</p>
-                            <p>@journal.IssnNo</p>
+                            <h4>Journal Copyright Year</h4>
+                            <p>Journal VolumeName</p>
+                            <p>Journal IssnNo</p>
                             <p></p>
                             <a asp-controller="Journals" asp-action="JournalDownload"><i class="fa fa-download"></i></a>
                         </div>
                     </div>
                 </div>
-            }
+        </div>
+        <div class="row">
+                <div class="col-lg-4 col-md-6 p-0">
+                    <div class="work-block">
+                        <img src="~/img/work/10.jpg" alt="work-img" class="img-fluid">
+                        <div class="overlay-content-block">
+                            <h4>Journal Copyright Year</h4>
+                            <p>Journal VolumeName</p>
+                            <p>Journal IssnNo</p>
+                            <p></p>
+                            <a asp-controller="Journals" asp-action="JournalDownload"><i class="fa fa-download"></i></a>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <div class="row">
+                <div class="col-lg-4 col-md-6 p-0">
+                    <div class="work-block">
+                        <img src="~/img/work/10.jpg" alt="work-img" class="img-fluid">
+                        <div class="overlay-content-block">
+                            <h4>Journal Copyright Year</h4>
+                            <p>Journal VolumeName</p>
+                            <p>Journal IssnNo</p>
+                            <p></p>
+                            <a asp-controller="Journals" asp-action="JournalDownload"><i class="fa fa-download"></i></a>
+                        </div>
+                    </div>
+                </div>
         </div>
     </div>
 </section>
