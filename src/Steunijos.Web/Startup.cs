@@ -87,23 +87,29 @@ namespace Steunijos.Web
 
             var path = Path.Combine(env.WebRootPath, "Uploads");
             var paperPath = Path.Combine(env.WebRootPath, "Papers");
+            var journalPath = Path.Combine(path, "Journals");
+            var depositSlipPath = Path.Combine(path, "BankDeposits");
 
             var dir = new DirectoryInfo(path);
-            try
-            {
-                if (!Directory.Exists(path))
-                {
-                    dir.Create();
-                }
 
-                if (!Directory.Exists(paperPath))
-                {
-                    Directory.CreateDirectory(paperPath);
-                }
-            }
-            catch (Exception ex)
+            if (!Directory.Exists(path))
             {
-                Console.WriteLine($"{ex.Message}");
+                dir.Create();
+            }
+
+            if (!Directory.Exists(paperPath))
+            {
+                Directory.CreateDirectory(paperPath);
+            }
+
+            if (!Directory.Exists(journalPath))
+            {
+                Directory.CreateDirectory(journalPath);
+            }
+
+            if (!Directory.Exists(depositSlipPath))
+            {
+                Directory.CreateDirectory(depositSlipPath);
             }
 
             app.UseStaticFiles(new StaticFileOptions
