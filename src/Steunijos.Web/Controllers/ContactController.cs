@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Steunijos.Web.Controllers
 {
-    public class ContactController : Controller
+    public class ContactUsController : Controller
     {
         // GET: Contact
         public ActionResult Index()
