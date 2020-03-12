@@ -36,7 +36,7 @@ namespace Steunijos.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<SteunijosContext>(options =>
-                options.UseNpgsql(
+                options.UseSqlite(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<ApplicationRole>()

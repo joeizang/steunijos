@@ -1,10 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Steunijos.Web.Migrations
 {
-    public partial class InitialDbStreamlined : Migration
+    public partial class InitialDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -21,52 +20,6 @@ namespace Steunijos.Web.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetRoles", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Journals",
-                columns: table => new
-                {
-                    IssnNo = table.Column<string>(nullable: false),
-                    VolumeName = table.Column<string>(nullable: true),
-                    CopyrightYear = table.Column<DateTimeOffset>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Journals", x => x.IssnNo);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SubjectArea",
-                columns: table => new
-                {
-                    SubjectAreaId = table.Column<string>(nullable: false),
-                    SubjectAreaName = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SubjectArea", x => x.SubjectAreaId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AspNetRoleClaims",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    RoleId = table.Column<string>(nullable: false),
-                    ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
-                        column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -102,7 +55,6 @@ namespace Steunijos.Web.Migrations
                     DepartmentName = table.Column<string>(nullable: true),
                     FacultyName = table.Column<string>(nullable: true),
                     UniversityName = table.Column<string>(nullable: true),
-                    JournalIssnNo = table.Column<string>(nullable: true),
                     PaperAuthor_Designation = table.Column<string>(nullable: true),
                     PaperAuthor_DepartmentName = table.Column<string>(nullable: true),
                     PaperAuthor_FacultyName = table.Column<string>(nullable: true),
@@ -114,46 +66,55 @@ namespace Steunijos.Web.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_AspNetUsers_Journals_JournalIssnNo",
-                        column: x => x.JournalIssnNo,
-                        principalTable: "Journals",
-                        principalColumn: "IssnNo",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Papers",
+                name: "Journals",
                 columns: table => new
                 {
-                    PaperId = table.Column<string>(nullable: false),
-                    Title = table.Column<string>(nullable: true),
-                    SavedPath = table.Column<string>(nullable: true),
-                    AuthorName = table.Column<string>(nullable: true),
-                    PaperOriginalName = table.Column<string>(nullable: true),
+                    IssnNo = table.Column<string>(nullable: false),
+                    VolumeName = table.Column<string>(nullable: true),
                     ActualPath = table.Column<string>(nullable: true),
-                    SubjectAreaId = table.Column<string>(nullable: true),
-                    PaperTopic = table.Column<string>(nullable: true),
-                    JournalId = table.Column<string>(nullable: true),
-                    CreatedAt = table.Column<DateTimeOffset>(nullable: false),
-                    UpdatedAt = table.Column<DateTimeOffset>(nullable: false),
-                    ThumbnailPath = table.Column<string>(nullable: true)
+                    SavedPath = table.Column<string>(nullable: true),
+                    CopyrightYear = table.Column<DateTimeOffset>(nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Papers", x => x.PaperId);
+                    table.PrimaryKey("PK_Journals", x => x.IssnNo);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SubjectArea",
+                columns: table => new
+                {
+                    SubjectAreaId = table.Column<string>(nullable: false),
+                    SubjectAreaName = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SubjectArea", x => x.SubjectAreaId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetRoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    RoleId = table.Column<string>(nullable: false),
+                    ClaimType = table.Column<string>(nullable: true),
+                    ClaimValue = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Papers_Journals_JournalId",
-                        column: x => x.JournalId,
-                        principalTable: "Journals",
-                        principalColumn: "IssnNo",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Papers_SubjectArea_SubjectAreaId",
-                        column: x => x.SubjectAreaId,
-                        principalTable: "SubjectArea",
-                        principalColumn: "SubjectAreaId",
-                        onDelete: ReferentialAction.Restrict);
+                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -161,7 +122,7 @@ namespace Steunijos.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                        .Annotation("Sqlite:Autoincrement", true),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -242,6 +203,28 @@ namespace Steunijos.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Payments",
+                columns: table => new
+                {
+                    PaperPaymentId = table.Column<string>(nullable: false),
+                    TellerNumber = table.Column<string>(nullable: true),
+                    AmountPaid = table.Column<decimal>(nullable: false),
+                    AuthorName = table.Column<string>(nullable: true),
+                    PaymentDate = table.Column<DateTimeOffset>(nullable: false),
+                    PaperAuthorId = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payments", x => x.PaperPaymentId);
+                    table.ForeignKey(
+                        name: "FK_Payments_AspNetUsers_PaperAuthorId",
+                        column: x => x.PaperAuthorId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "JournalContents",
                 columns: table => new
                 {
@@ -269,24 +252,30 @@ namespace Steunijos.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Payments",
+                name: "Papers",
                 columns: table => new
                 {
-                    PaperPaymentId = table.Column<string>(nullable: false),
-                    TellerNumber = table.Column<string>(nullable: true),
-                    AmountPaid = table.Column<decimal>(nullable: false),
+                    PaperId = table.Column<string>(nullable: false),
+                    Title = table.Column<string>(nullable: true),
+                    SavedPath = table.Column<string>(nullable: true),
                     AuthorName = table.Column<string>(nullable: true),
-                    PaymentDate = table.Column<DateTimeOffset>(nullable: false),
-                    PaperAuthorId = table.Column<string>(nullable: true)
+                    PaperOriginalName = table.Column<string>(nullable: true),
+                    ActualPath = table.Column<string>(nullable: true),
+                    SubjectAreaId = table.Column<string>(nullable: true),
+                    PaperTopic = table.Column<string>(nullable: true),
+                    JournalId = table.Column<string>(nullable: true),
+                    CreatedAt = table.Column<DateTimeOffset>(nullable: false),
+                    UpdatedAt = table.Column<DateTimeOffset>(nullable: false),
+                    ThumbnailPath = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Payments", x => x.PaperPaymentId);
+                    table.PrimaryKey("PK_Papers", x => x.PaperId);
                     table.ForeignKey(
-                        name: "FK_Payments_AspNetUsers_PaperAuthorId",
-                        column: x => x.PaperAuthorId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
+                        name: "FK_Papers_SubjectArea_SubjectAreaId",
+                        column: x => x.SubjectAreaId,
+                        principalTable: "SubjectArea",
+                        principalColumn: "SubjectAreaId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -328,11 +317,6 @@ namespace Steunijos.Web.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_AspNetUsers_JournalIssnNo",
-                table: "AspNetUsers",
-                column: "JournalIssnNo");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_JournalContents_AuthorId",
                 table: "JournalContents",
                 column: "AuthorId");
@@ -341,11 +325,6 @@ namespace Steunijos.Web.Migrations
                 name: "IX_JournalContents_JournalIssnNo",
                 table: "JournalContents",
                 column: "JournalIssnNo");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Papers_JournalId",
-                table: "Papers",
-                column: "JournalId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Papers_SubjectAreaId",
@@ -388,13 +367,13 @@ namespace Steunijos.Web.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "Journals");
+
+            migrationBuilder.DropTable(
                 name: "SubjectArea");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Journals");
         }
     }
 }
