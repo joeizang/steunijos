@@ -19,6 +19,7 @@
 *.user
 *.userosscache
 *.sln.docstates
+./src/Steunijos.Web/wwwroot/Uploads
 
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
@@ -361,3 +362,5 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
+src/Steunijos.Web/wwwroot/Uploads/Journals/6371958906190544408LLT57W0QZ.txt
+src/Steunijos.Web/wwwroot/Uploads/Journals/637195890619209457-5ae8bc61-de5d-4542-a356-743d97f47eb9.txt
