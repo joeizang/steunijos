@@ -30,7 +30,7 @@ namespace Steunijos.Web.Controllers
         // POST: Contact/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult SendContact(IFormCollection collection)
         {
             try
             {

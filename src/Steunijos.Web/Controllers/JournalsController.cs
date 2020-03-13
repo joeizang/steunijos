@@ -106,6 +106,7 @@ namespace Steunijos.Web.Controllers
             return RedirectToRoute(new { controller = "Home", action = "Index" });
         }
 
+        [HttpPost]
         public async Task<ActionResult> JournalDownload(string journalName)
         {
             var uploadFolder = Path.Combine(_env.WebRootPath, "Uploads");
