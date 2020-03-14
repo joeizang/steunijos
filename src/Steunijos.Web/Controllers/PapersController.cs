@@ -94,12 +94,9 @@ namespace Steunijos.Web.Controllers
 
                 using (var fstream = new FileStream(combinedPath, FileMode.Create, FileAccess.Write))
                 {
-
                     await submitPaper.File.CopyToAsync(fstream);
                     var fileInfo = new FileInfo(combinedPath);
-
                     //rename the file on disk to a new name
-
                     var copyPath = Path.Combine(uploadPath, $"{DateTimeOffset.Now.Ticks.ToString()}-{Guid.NewGuid().ToString()}{fileInfo.Extension}");
                     fileInfo.CopyTo(copyPath);
 

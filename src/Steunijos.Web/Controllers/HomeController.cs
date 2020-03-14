@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -67,6 +68,44 @@ namespace Steunijos.Web.Controllers
             });
 
             return View();
+        }
+        
+        [HttpPost]
+        public async Task<ActionResult> JournalDownload(string journalName)
+        {
+            var uploadFolder = Path.Combine(_env.WebRootPath, "Uploads");
+            var fileDownload = Path.Combine(uploadFolder, journalName);
+
+            if (!System.IO.File.Exists(fileDownload))
+            {
+                return Json(
+                    new
+                    {
+                        ErrorMessage = "The file you are trying to download doesn't exist!",
+                        ErrorCode = 404
+                    });
+            }
+
+            var memoryStream = new MemoryStream();
+
+            using (var stream = new FileStream(fileDownload, FileMode.Open))
+            {
+                await stream.CopyToAsync(memoryStream);
+            }
+
+            memoryStream.Position = 0;
+            return File(memoryStream, GetContentType(fileDownload), journalName);
+        }
+        
+        private string GetContentType(string path)
+        {
+            var provider = new FileExtensionContentTypeProvider();
+            string contentType;
+            if (!provider.TryGetContentType(path, out contentType))
+            {
+                contentType = "application/pdf";
+            }
+            return contentType;
         }
 
         public IActionResult Privacy()

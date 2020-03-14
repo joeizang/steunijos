@@ -93,7 +93,6 @@ namespace Steunijos.Web.Controllers
                     _db.Journals.Add(journal);
                     var pId = await _db.SaveChangesAsync().ConfigureAwait(false);
                 }
-
             }
             catch (Exception e)
             {
@@ -106,43 +105,7 @@ namespace Steunijos.Web.Controllers
             return RedirectToRoute(new { controller = "Home", action = "Index" });
         }
 
-        [HttpPost]
-        public async Task<ActionResult> JournalDownload(string journalName)
-        {
-            var uploadFolder = Path.Combine(_env.WebRootPath, "Uploads");
-            var fileDownload = Path.Combine(uploadFolder, journalName);
-
-            if (System.IO.File.Exists(fileDownload))
-            {
-                return Json(
-                    new
-                    {
-                        ErrorMessage = "The file you are trying to download doesn't exist!",
-                        ErrorCode = 404
-                    });
-            }
-
-            var memoryStream = new MemoryStream();
-
-            using (var stream = new FileStream(fileDownload, FileMode.Open))
-            {
-                await stream.CopyToAsync(memoryStream);
-            }
-
-            memoryStream.Position = 0;
-            return File(memoryStream, GetContentType(fileDownload), journalName);
-        }
-
-        private string GetContentType(string path)
-        {
-            var provider = new FileExtensionContentTypeProvider();
-            string contentType;
-            if (!provider.TryGetContentType(path, out contentType))
-            {
-                contentType = "application/pdf";
-            }
-            return contentType;
-        }
+        
 
         // GET: Journal/Edit/5
         public ActionResult Edit(int id)

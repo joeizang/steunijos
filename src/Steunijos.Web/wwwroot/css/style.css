@@ -41,9 +41,27 @@ body {
   color: #6c757d;
 }
 
+.formcontrolste {
+  /*border-radius: 15px !important;*/
+  border-width: medium;
+  border-color: lightgray;
+}
+
+#form-inform > ul > li {
+  list-style: none;
+}
+
+.navbar {
+  /*background: rgba(0,0,0,.6) !important;*/
+}
+
+.carousel-item {
+  height: 50vh;
+}
+
 #logoImg {
   width: 30%;
-  height: 30%;
+  height: 20%;
 }
 
 .header-logo-left {
@@ -245,7 +263,7 @@ img {
 }
 
 #g-btn-span {
-  background: url("~/img/g-logo.jpg") transparent 5px 40% no-repeat;
+  background: url(../img/g-logo.jpg) transparent 5px 40% no-repeat;
   display: inline-block;
   vertical-align: middle;
 }
@@ -296,8 +314,8 @@ img {
 .bg-primary,
 .btn-primary,
 .btn-white:hover {
-  background: #21c87a !important;
-  border-color: #21c87a !important;
+  background: #337ab7 !important;
+  border-color: #337ab7 !important;
   color: #fff;
 }
 

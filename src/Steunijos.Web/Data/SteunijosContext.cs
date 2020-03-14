@@ -22,8 +22,11 @@ namespace Steunijos.Web.Data
 
             builder.Entity<PaperAuthor>()
                 .HasMany(a => a.Payments);
+            builder.Entity<ContactUsSubmission>()
+                .HasKey(c => c.SubmissionId);
         }
 
+        public DbSet<ContactUsSubmission> ContactUsSubmissions { get; set; }
         public DbSet<Journal> Journals { get; set; }
 
         public DbSet<PaperAuthor> Authors { get; set; }
