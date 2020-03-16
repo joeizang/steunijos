@@ -44,8 +44,28 @@ namespace Steunijos.Web.Controllers
         }
 
         // GET: Journal/Details/5
-        public ActionResult Details(int id)
+        //explore the option of using google docs viewer to show a document.
+        //look into exploring the url to the static pdf file to be viewed
+        //so that the viewer can display the file.
+        public async Task<ActionResult> Details(string issn)
         {
+            var journal = await _db.Journals.AsNoTracking()
+                .Where(j => j.IssnNo.Equals(issn))
+                .SingleOrDefaultAsync().ConfigureAwait(false);
+            var mstream = new MemoryStream();
+            var journalPath = "";
+            using (var stream = new FileStream(journalPath, FileMode.Open))
+            {
+                if (stream.Name.Contains(journal.ActualPath))
+                {
+                    await stream.CopyToAsync(mstream).ConfigureAwait(false);
+                }
+            }
+            /*
+             * The plan would be to create the url or uri and pass it over to the view and
+             * the hand the composed uri to google doc viewer and have it open the file.
+             */
+            
             return View();
         }
 
@@ -103,54 +123,6 @@ namespace Steunijos.Web.Controllers
             Message = "Journal upload successful!";
 
             return RedirectToRoute(new { controller = "Home", action = "Index" });
-        }
-
-        
-
-        // GET: Journal/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Journal/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Journal/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Journal/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
     }
 }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Steunijos.Web.Models;
 
 namespace Steunijos.Web.ViewModels.Paper
 {
@@ -14,8 +15,10 @@ namespace Steunijos.Web.ViewModels.Paper
         [Required(ErrorMessage = "Every Paper must have a Title!")]
         [StringLength(100)]
         public string Title { get; set; }
-
-        public List<SelectListItem> SubjectArea { get; set; } = new List<SelectListItem>();
+        
+        [Display(Name = "Subject Area")]
+        [EnumDataType(typeof(SubjectAreaEnum))]
+        public SubjectAreaEnum SubjectArea { get; set; }
 
         public string SubjectAreaSelected { get; set; }
 

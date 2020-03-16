@@ -21,6 +21,10 @@ namespace Steunijos.Web.Models
 
         public DateTimeOffset CreatedAt { get; set; }
 
+        public JournalContent TableOfContents { get; set; }
+        
+        public string JournalContentId { get; set; }
+
 
     }
 }

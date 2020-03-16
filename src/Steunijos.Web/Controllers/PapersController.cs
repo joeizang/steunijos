@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Steunijos.Web.Data;
 using Steunijos.Web.ViewModels.Paper;
 using Microsoft.AspNetCore.Http;
@@ -18,11 +19,11 @@ namespace Steunijos.Web.Controllers
 {
     public class PapersController : Controller
     {
-        private readonly IHostEnvironment _env;
+        private readonly IWebHostEnvironment _env;
         private readonly SteunijosContext _db;
         //private readonly IGoogleDriveService _gds;
 
-        public PapersController(IHostEnvironment env,
+        public PapersController(IWebHostEnvironment env,
             SteunijosContext db,
             IConfiguration config,
             IGoogleDriveService gds)
@@ -53,28 +54,14 @@ namespace Steunijos.Web.Controllers
         // GET: Paper/Details/5
         public ActionResult Details(string id)
         {
-
+            
             return View();
         }
 
         public ActionResult SubmitPaper()
         {
-            var submitPaper = new SubmitPaper
-            {
-                SubjectArea = new List<SelectListItem>
-                {
-                new SelectListItem{ Text="Select a Subject Area", Value=""},
-                new SelectListItem{ Text="Biology Education", Value="Biology Education"},
-                new SelectListItem{ Text="Building Education", Value="Building Education"},
-                new SelectListItem{ Text="Chemistry Education", Value="Chemistry Education"},
-                new SelectListItem{ Text="Computer Science", Value="Computer Science"},
-                new SelectListItem{ Text="Electrical Technology", Value="Electrical Technology"},
-                new SelectListItem{ Text="Geography Education", Value="Geography Education"},
-                new SelectListItem{ Text="Integrated Science Education", Value="Integrated Science Education"},
-                new SelectListItem{ Text="Mathematics Education", Value="Mathematics Education"},
-                new SelectListItem{ Text="Welding Technology Education", Value="Welding Technology Education"}
-                }
-            };
+            var submitPaper = new SubmitPaper();
+            submitPaper.SubjectArea = SubjectAreaEnum.Select_a_Subject_Area;
 
             return View(submitPaper);
         }
@@ -87,10 +74,10 @@ namespace Steunijos.Web.Controllers
 
             try
             {
-                var dir = $"{_env.ContentRootPath}";
+                var dir = $"{_env.WebRootPath}";
                 var uploadPath = Path.Combine(dir, "Uploads");
-                var mod = $"{DateTimeOffset.UtcNow.LocalDateTime.Ticks}-{submitPaper.File.FileName}";
-                var combinedPath = Path.Combine(uploadPath, mod);
+                var modifiedFileName = $"{DateTimeOffset.UtcNow.LocalDateTime.Ticks}-{submitPaper.File.FileName}";
+                var combinedPath = Path.Combine(uploadPath, modifiedFileName);
 
                 using (var fstream = new FileStream(combinedPath, FileMode.Create, FileAccess.Write))
                 {
@@ -99,7 +86,7 @@ namespace Steunijos.Web.Controllers
                     //rename the file on disk to a new name
                     var copyPath = Path.Combine(uploadPath, $"{DateTimeOffset.Now.Ticks.ToString()}-{Guid.NewGuid().ToString()}{fileInfo.Extension}");
                     fileInfo.CopyTo(copyPath);
-
+                    var enumName = EnumValueToStringConverter.ConvertToString(submitPaper.SubjectArea);
                     //save paper to db after taking all the info from submitPaper
                     var paper = new Paper
                     {
@@ -110,7 +97,7 @@ namespace Steunijos.Web.Controllers
                         SubjectArea = new SubjectArea
                         {
                             SubjectAreaId = Guid.NewGuid().ToString(),
-                            SubjectAreaName = submitPaper.SubjectAreaSelected
+                            SubjectAreaName = enumName
                         },
                         PaperOriginalName = submitPaper.File.FileName,
                         CreatedAt = submitPaper.DateUploaded,

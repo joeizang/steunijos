@@ -138,47 +138,36 @@
 
                 <!-- Subheading -->
                 <p class="mb-5">
-                    All Uploaded Journals can be downloaded also. These are digital copies of print versions of same Journals.
+                    All Uploaded Journals can be downloaded if you are registered and an Author. These are digital copies of print versions of same Journals.
                 </p>
             </div>
         </div>
-		<div class="row">
-                <div class="col-lg-4 col-md-6 p-0">
-                    <div class="work-block">
-                        <img src="~/img/acrobatpdf.jpg" alt="work-img" class="img-fluid">
-                        <div class="overlay-content-block">
-                            <h4>Journal Copyright Year</h4>
-                            <p>Journal VolumeName</p>
-                            <p>Journal IssnNo</p>
-                            <p></p>
-                            <a asp-action="JournalDownload"><i class="fa fa-download"></i></a>
-                        </div>
+    <div class="row">
+        <div class="col-lg-4 col-md-6 p-0">
+            <div class="col-lg-4 col-md-6 p-0">
+                <div class="work-block">
+                    <img src="~/img/acrobatpdf.jpg" alt="work-img" class="img-fluid">
+                    <div class="overlay-content-block">
+                        <h4>Journal Copyright Year</h4>
+                        <p>Journal VolumeName</p>
+                        <p>Journal IssnNo</p>
+                        <p></p>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            if (User.IsInRole("Author") || User.IsInRole("Editor"))
+                            {
+                                //we might need to check if the author has paid later.
+                                <a asp-action="JournalDownload">
+                                    <i class="fa fa-download"></i>
+                                </a>
+                            }
+                        }
+                        <a asp-action="JournalDownload">
+                            <i class="fa fa-eye"></i>
+                        </a>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-6 p-0">
-                    <div class="work-block">
-                        <img src="~/img/acrobatpdf.jpg" alt="work-img" class="img-fluid">
-                        <div class="overlay-content-block">
-                            <h4>Journal Copyright Year</h4>
-                            <p>Journal VolumeName</p>
-                            <p>Journal IssnNo</p>
-                            <p></p>
-                            <a asp-action="JournalDownload"><i class="fa fa-download"></i></a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 p-0">
-                    <div class="work-block">
-                        <img src="~/img/acrobatpdf.jpg" alt="work-img" class="img-fluid">
-                        <div class="overlay-content-block">
-                            <h4>Journal Copyright Year</h4>
-                            <p>Journal VolumeName</p>
-                            <p>Journal IssnNo</p>
-                            <p></p>
-                            <a asp-action="JournalDownload"><i class="fa fa-download"></i></a>
-                        </div>
-                    </div>
-                </div>
+            </div>
         </div>
     </div>
 </section>

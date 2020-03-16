@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Steunijos.Web.Migrations
@@ -11,7 +12,7 @@ namespace Steunijos.Web.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<string>(maxLength: 200, nullable: false),
                     Name = table.Column<string>(maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(nullable: true),
@@ -69,6 +70,24 @@ namespace Steunijos.Web.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ContactUsSubmissions",
+                columns: table => new
+                {
+                    SubmissionId = table.Column<string>(nullable: false),
+                    SendersFullName = table.Column<string>(nullable: true),
+                    ReceivingEmailAddress = table.Column<string>(nullable: true),
+                    SubmissionDate = table.Column<DateTimeOffset>(nullable: false),
+                    SendersEmail = table.Column<string>(nullable: true),
+                    MessageSent = table.Column<string>(nullable: true),
+                    MessageType = table.Column<string>(nullable: true),
+                    MessageSubject = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ContactUsSubmissions", x => x.SubmissionId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Journals",
                 columns: table => new
                 {
@@ -101,7 +120,7 @@ namespace Steunijos.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     RoleId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -122,7 +141,7 @@ namespace Steunijos.Web.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<string>(nullable: false),
                     ClaimType = table.Column<string>(nullable: true),
                     ClaimValue = table.Column<string>(nullable: true)
@@ -353,6 +372,9 @@ namespace Steunijos.Web.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "ContactUsSubmissions");
 
             migrationBuilder.DropTable(
                 name: "JournalContents");

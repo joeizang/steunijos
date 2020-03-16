@@ -24,6 +24,16 @@ namespace Steunijos.Web.Data
                 .HasMany(a => a.Payments);
             builder.Entity<ContactUsSubmission>()
                 .HasKey(c => c.SubmissionId);
+
+            builder.Entity<ApplicationRole>(entity => entity.Property(x => x.NormalizedName).HasMaxLength(256));
+            builder.Entity<ApplicationRole>(entity => entity.Property(x => x.Name).HasMaxLength(256));
+            builder.Entity<ApplicationRole>(entity => entity.Property(x => x.Id).HasMaxLength(200));
+
+            builder.Entity<Journal>()
+                .HasOne(x => x.TableOfContents)
+                .WithOne(j => j.Journal)
+                .HasForeignKey<JournalContent>(f => f.JournalIssnNo);
+            
         }
 
         public DbSet<ContactUsSubmission> ContactUsSubmissions { get; set; }

@@ -20,6 +20,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Steunijos.Web.SteunijosServices;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace Steunijos.Web
 {
@@ -36,8 +37,11 @@ namespace Steunijos.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<SteunijosContext>(options =>
-                options.UseSqlite(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                options.UseMySql(
+                    "Server=localhost;Database=steunijosdb;User=root;Password=5t#uniJ0s-2020", options =>
+                    {
+                        options.ServerVersion(new Version(5, 7, 27), ServerType.MySql);
+                    }));
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<SteunijosContext>();
