@@ -14,14 +14,14 @@ namespace Steunijos.Web.FrameworkExtensions
         {
             service.Configure<IdentityOptions>(options =>
             {
-                options.Password.RequireDigit = true;
-                options.Password.RequiredLength = 8;
-                options.Password.RequireLowercase = true;
-                options.Password.RequireUppercase = true;
-                options.Password.RequireNonAlphanumeric = true;
+                 options.Password.RequireDigit = false;
+                 options.Password.RequiredLength = 8;
+                 options.Password.RequireLowercase = true;
+                 options.Password.RequireUppercase = false;
+                 options.Password.RequireNonAlphanumeric = false;
 
 
-                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMKOPQRSTUVWXYZ-._@+";
+                 options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMKOPQRSTUVWXYZ-._@+";
                 options.User.RequireUniqueEmail = true;
                 options.SignIn.RequireConfirmedAccount = false;
             });

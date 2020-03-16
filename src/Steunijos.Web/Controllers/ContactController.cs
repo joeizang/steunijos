@@ -99,8 +99,9 @@ namespace Steunijos.Web.Controllers
                 }
                 return RedirectToRoute(new {controller = "Home", action = "Index"});
             }
-            catch
+            catch(Exception ex)
             {
+                ViewBag.ErrorMessage = ex.Message;
                 return View("Create");
             }
             

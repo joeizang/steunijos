@@ -31,6 +31,7 @@ namespace Steunijos.Web.Controllers
 
         public async Task<IActionResult> Index()
         {
+            var context = HttpContext.User.Identity.IsAuthenticated;
             var uploadPath = Path.Combine(_env.WebRootPath, "Uploads");
             var journalPath = Path.Combine(uploadPath, "Journals");
             var thumb = new IconThumbnail();

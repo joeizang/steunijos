@@ -1,5 +1,6 @@
 
 
+using System;
 using System.ComponentModel.DataAnnotations;
 using Steunijos.Web.Models;
 
@@ -7,6 +8,11 @@ namespace Steunijos.Web.ViewModels.ContactUs
 {
     public class ContactUsInputModel
     {
+
+        public ContactUsInputModel()
+        {
+            MessageId = Guid.NewGuid().ToString();
+        }
         [Required]
         [EnumDataType(typeof(MessageType))]
         public MessageType MessageType { get; set; }
