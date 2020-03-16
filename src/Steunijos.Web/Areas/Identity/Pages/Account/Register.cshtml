@@ -21,36 +21,37 @@
 
                     <div class="form-group">
                         <label asp-for="Input.Designation"></label>
-                        <select name="Designation" class="form-control formcontrolste rounded" 
+                        <select name="Designation" class="form-control custom-select formcontrolste rounded" 
                                 asp-for="Input.Designation" asp-items="@Html.GetEnumSelectList<Designation>()">
                         </select>
+                        <label for="" class=" formcontrolste rounded"></label>
                         
                     </div>
                     <div class="form-group">
                         <label asp-for="Input.FirstName"></label>
-                        <input asp-for="Input.FirstName" class="form-control" />
+                        <input asp-for="Input.FirstName" class="form-control formcontrolste rounded" />
                         <span asp-validation-for="Input.FirstName" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
                         <label asp-for="Input.LastName"></label>
-                        <input asp-for="Input.LastName" class="form-control" />
+                        <input asp-for="Input.LastName" class="form-control formcontrolste rounded" />
                         <span asp-validation-for="Input.LastName" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
                         <label asp-for="Input.Email"></label>
-                        <input asp-for="Input.Email" class="form-control" />
+                        <input asp-for="Input.Email" class="form-control formcontrolste rounded" />
                         <span asp-validation-for="Input.Email" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Input.Password"></label>
-                        <input asp-for="Input.Password" class="form-control" />
+                        <input asp-for="Input.Password" class="form-control formcontrolste rounded" />
                         <span asp-validation-for="Input.Password" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Input.ConfirmPassword"></label>
-                        <input asp-for="Input.ConfirmPassword" class="form-control" />
+                        <input asp-for="Input.ConfirmPassword" class="form-control formcontrolste rounded" />
                         <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                     </div>
                     <button type="submit" class="btn btn-primary">Register</button>

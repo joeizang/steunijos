@@ -21,7 +21,7 @@ namespace Steunijos.Web.FrameworkExtensions
                  options.Password.RequireNonAlphanumeric = false;
 
 
-                 options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMKOPQRSTUVWXYZ-._@+";
+                 options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMKOPQRSTUVWXYZ0123456789-._@+";
                 options.User.RequireUniqueEmail = true;
                 options.SignIn.RequireConfirmedAccount = false;
             });

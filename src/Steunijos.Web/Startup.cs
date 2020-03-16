@@ -51,15 +51,15 @@ namespace Steunijos.Web
 
             services.AddSteUserOptions();
 
-            services.AddAuthentication()
-            .AddGoogle(options =>
-            {
-                IConfigurationSection googleAuthNSection =
-                    Configuration.GetSection("AuthGoogle");
+            // services.AddAuthentication()
+            // .AddGoogle(options =>
+            // {
+            //     IConfigurationSection googleAuthNSection =
+            //         Configuration.GetSection("AuthGoogle");
 
-                options.ClientId = googleAuthNSection["ClientId"];
-                options.ClientSecret = googleAuthNSection["ClientSecret"];
-            });
+            //     options.ClientId = googleAuthNSection["ClientId"];
+            //     options.ClientSecret = googleAuthNSection["ClientSecret"];
+            // });
 
             services.AddTransient<IGoogleDriveService, GoogleDriveService>();
         }
