@@ -1,4 +1,4 @@
-﻿@* @model IEnumerable<Steunijos.Web.ViewModels.Journal.JournalReadModel> *@
+﻿vv@* @model IEnumerable<Steunijos.Web.ViewModels.Journal.JournalReadModel> *@
 @{
     ViewData["Title"] = "Home";
 }
@@ -73,7 +73,7 @@
 
                 <!-- Subheading -->
                 <p class="mb-5">
-                    You register with us using any supported social platform, and upload a paper which could be a project, thesis or related documents.
+                    You register with us <span><a style="color: #4285f4;" asp-area="Identity" asp-page="/Register">here</a></span> and upload a paper which could be a project, thesis or related documents.
                 </p>
 
             </div>
@@ -85,7 +85,7 @@
                     <img src="~/img/LJ_academic.jpg" alt="" class="img-fluid">
 
                     <h3>Project Research</h3>
-                    <p>Nihil facere delectus eaque aut possimus nobis laudantium reprehenderit.</p>
+                    <p>Departmental project papers by our best and brightest.</p>
                 </div>
             </div>
             <div class="col-lg-4 col-sm-6 col-md-6">
@@ -93,20 +93,44 @@
                     <img src="~/img/books-thesis.jpg" alt="" class="img-fluid">
 
                     <h3>Doctoral Thesis</h3>
-                    <p>Nihil facere delectus eaque aut possimus nobis laudantium reprehenderit.</p>
+                    <p>Masters and Doctoral thesis put forward by members of our illustrous department.</p>
                 </div>
             </div>
             <div class="col-lg-4 col-sm-6 col-md-6">
                 <div class="process-block">
                     <img src="~/img/books.jpg" alt="" class="img-fluid">
 
-                    <h3>IJRSTME Publications</h3>
-                    <p>Nihil facere delectus eaque aut possimus nobis laudantium reprehenderit.</p>
+                    <h3><a asp-controller="Journals" asp-action="ShowJournals" style="color: #212529;"
+                           data-toggle="ajax-modal"
+                           data-target="#showJournaldiv"
+                           data-keyboard="true"
+                           >IJRSTME Publications</a></h3>
+                    <p>Compiled Journals by contributing authors on various topics and subject areas.</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<!-- Modal to show all journals  -->
+
+<div id="showJournaldiv" class="modal fade">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Show Journals</h4>
+                <button class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>this is the body of this modal ready for content from the server</p>
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+
+<!-- end Modal element -->
+
 
 <!-- Projects
 ================================================== -->
@@ -129,45 +153,59 @@
 
 <section id="work" class="section-bottom">
     <div class="container">
-        <div class="row justify-content-center mb-4">
-            <div class="col-md-8 col-lg-6 text-center">
-                <!-- Heading -->
-                <h2 class="section-title mb-2">
-                    Published Journals
-                </h2>
-
-                <!-- Subheading -->
-                <p class="mb-5">
-                    All Uploaded Journals can be downloaded if you are registered and an Author. These are digital copies of print versions of same Journals.
-                </p>
-            </div>
-        </div>
-    <div class="row">
-        <div class="col-lg-4 col-md-6 p-0">
-            <div class="col-lg-4 col-md-6 p-0">
-                <div class="work-block">
-                    <img src="~/img/acrobatpdf.jpg" alt="work-img" class="img-fluid">
-                    <div class="overlay-content-block">
-                        <h4>Journal Copyright Year</h4>
-                        <p>Journal VolumeName</p>
-                        <p>Journal IssnNo</p>
-                        <p></p>
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            if (User.IsInRole("Author") || User.IsInRole("Editor"))
-                            {
-                                //we might need to check if the author has paid later.
-                                <a asp-action="JournalDownload">
-                                    <i class="fa fa-download"></i>
-                                </a>
-                            }
-                        }
-                        <a asp-action="JournalDownload">
-                            <i class="fa fa-eye"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @*         <div class="row justify-content-center mb-4"> *@
+        @*             <div class="col-md-8 col-lg-6 text-center"> *@
+        @*                 <!-- Heading --> *@
+        @*                 <h2 class="section-title mb-2"> *@
+        @*                     Published Journals *@
+        @*                 </h2> *@
+        @* *@
+        @*                 <!-- Subheading --> *@
+        @*                 <p class="mb-5"> *@
+        @*                     All Uploaded Journals can be downloaded if you are registered and an Author. These are digital copies of print versions of same Journals. *@
+        @*                 </p> *@
+        @*             </div> *@
+        @*         </div> *@
+        @*     <div class="row"> *@
+        @*         <div class="col-lg-4 col-md-6 p-0"> *@
+        @*             <div class="col-lg-4 col-md-6 p-0"> *@
+        @*                 <div class="work-block"> *@
+        @*                     <img src="~/img/acrobatPdf.jpg" alt="work-img" class="img-fluid"> *@
+        @*                     <div class="overlay-content-block"> *@
+        @*                         <h4>Journal Copyright Year</h4> *@
+        @*                         <p>Journal VolumeName</p> *@
+        @*                         <p>Journal IssnNo</p> *@
+        @*                         <p></p> *@
+        @*                         @if (User.Identity.IsAuthenticated) *@
+        @*                         { *@
+        @*                             if (User.IsInRole("Author") || User.IsInRole("Editor")) *@
+        @*                             { *@
+        @*                                 //we might need to check if the author has paid later. *@
+        @*                                 <a asp-action="JournalDownload"> *@
+        @*                                     <i class="fa fa-download"></i> *@
+        @*                                 </a> *@
+        @*                             } *@
+        @*                         } *@
+        @*                         <a asp-action="JournalDownload"> *@
+        @*                             <i class="fa fa-eye"></i> *@
+        @*                         </a> *@
+        @*                     </div> *@
+        @*                 </div> *@
+        @*             </div> *@
+        @*         </div> *@
+        @*     </div> *@
     </div>
 </section>
+
+
+@section Scripts
+{
+    <script >
+        $(() => {
+           $('a[data-toggle="ajax-modal"]').click((evt) => {
+               evt.preventDefault();
+               
+           }) 
+        });
+    </script>
+}

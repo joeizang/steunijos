@@ -186,6 +186,10 @@ a:focus {
   text-decoration: none;
 }
 
+.mylink {
+  color: #4285f4;
+}
+
 .mb-6 {
   margin-bottom: 2rem !important;
 }

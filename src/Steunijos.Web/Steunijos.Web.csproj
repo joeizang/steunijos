@@ -20,4 +20,8 @@
     <PackageReference Include="ThumbnailsGenie" Version="2.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Admin\Views" />
+  </ItemGroup>
+
 </Project>

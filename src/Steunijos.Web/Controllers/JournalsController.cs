@@ -69,6 +69,52 @@ namespace Steunijos.Web.Controllers
             return View();
         }
 
+        public ActionResult ShowJournals()
+        {
+            var journals = new ShowJournalViewModel();
+        }
+        
+        [HttpGet]
+        public async Task<ActionResult> DownloadJournals(string journalName)
+        {
+            var uploadFolder = Path.Combine(_env.WebRootPath, "Uploads");
+            var fileDownload = Path.Combine(uploadFolder, journalName);
+
+            if (!System.IO.File.Exists(fileDownload))
+            {
+                return Json(
+                    new
+                    {
+                        ErrorMessage = "The file you are trying to download doesn't exist!",
+                        ErrorCode = 404
+                    });
+            }
+
+            var memoryStream = new MemoryStream();
+            Console.WriteLine($"Memory Stream created at { DateTimeOffset.UtcNow.LocalDateTime.ToString()}");
+            using (var stream = new FileStream(fileDownload, FileMode.Open))
+            {
+                Console.WriteLine($"File Stream created at { DateTimeOffset.UtcNow.LocalDateTime.ToString()}");
+                await stream.CopyToAsync(memoryStream);
+                Console.WriteLine($"File Stream copied to Memory Stream at { DateTimeOffset.UtcNow.LocalDateTime.ToString()}");
+            }
+
+            memoryStream.Position = 0;
+            Console.WriteLine($"Memory Stream position set at { DateTimeOffset.UtcNow.LocalDateTime.ToString()}");
+            return File(memoryStream, GetContentType(fileDownload), journalName);
+        }
+        
+        private string GetContentType(string path)
+        {
+            var provider = new FileExtensionContentTypeProvider();
+            string contentType;
+            if (!provider.TryGetContentType(path, out contentType))
+            {
+                contentType = "application/pdf";
+            }
+            return contentType;
+        }
+
         // GET: Journal/Create
         public ActionResult Create()
         {
