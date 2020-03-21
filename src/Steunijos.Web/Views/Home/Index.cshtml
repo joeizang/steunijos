@@ -1,4 +1,4 @@
-﻿vv@* @model IEnumerable<Steunijos.Web.ViewModels.Journal.JournalReadModel> *@
+﻿ @model IEnumerable<Steunijos.Web.ViewModels.Journal.JournalReadModel> 
 @{
     ViewData["Title"] = "Home";
 }
@@ -84,54 +84,40 @@
                 <div class="process-block">
                     <img src="~/img/LJ_academic.jpg" alt="" class="img-fluid">
 
-                    <h3>Project Research</h3>
-                    <p>Departmental project papers by our best and brightest.</p>
+                    <h3>Project Research, Masters & Doctoral Thesis</h3>
+                    <p>Departmental papers by our best and brightest.</p>
                 </div>
             </div>
             <div class="col-lg-4 col-sm-6 col-md-6">
                 <div class="process-block">
                     <img src="~/img/books-thesis.jpg" alt="" class="img-fluid">
 
-                    <h3>Doctoral Thesis</h3>
-                    <p>Masters and Doctoral thesis put forward by members of our illustrous department.</p>
+                    <h3 data-toogle="tooltip" data-placement="top" title="View and download papers">
+                        <a href="#" style="color: #212529;" data-toggle="modal" data-target="#showPaperdiv" data-keyboard="true">
+                            WhitePapers
+                        </a>
+                    </h3>
+                    <p>You can access individual papers that make up our journals, authored by really great minds.</p>
                 </div>
             </div>
             <div class="col-lg-4 col-sm-6 col-md-6">
                 <div class="process-block">
                     <img src="~/img/books.jpg" alt="" class="img-fluid">
 
-                    <h3><a asp-controller="Journals" asp-action="ShowJournals" style="color: #212529;"
-                           data-toggle="ajax-modal"
+                    <h3 data-toggle="tooltip" data-placement="top" title="Download published journals">
+                        <a asp-controller="Journals" asp-action="ShowJournals" style="color: #212529;"
+                           data-toggle="modal"
                            data-target="#showJournaldiv"
-                           data-keyboard="true"
-                           >IJRSTME Publications</a></h3>
+                           data-keyboard="true">
+                            IJRSTME Published Journals
+                        </a>
+                    </h3>
                     <p>Compiled Journals by contributing authors on various topics and subject areas.</p>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-<!-- Modal to show all journals  -->
-
-<div id="showJournaldiv" class="modal fade">
-    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Show Journals</h4>
-                <button class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p>this is the body of this modal ready for content from the server</p>
-            </div>
-            <div class="modal-footer"></div>
-        </div>
-    </div>
-</div>
-
-<!-- end Modal element -->
-
-
 <!-- Projects
 ================================================== -->
 
@@ -197,15 +183,103 @@
     </div>
 </section>
 
+ <section class="section" style="display: none;" id="modalHtml">
+     <div class="container-fluid">
+         
+     </div>
+ </section>
+
+<!-- Modal to show all journals  -->
+
+ <div id="showJournaldiv" class="modal fade">
+     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+         <div class="modal-content">
+             <div class="modal-header">
+                 <h4 class="modal-title" style="margin: 0 auto;">
+                     Download Journals
+                 </h4>
+                 <button class="close" data-dismiss="modal">&times;</button>
+             </div>
+             <div id="modalTarget" class="modal-body">
+                 <div class="container-fluid">
+                     <div class="row">
+                         @{
+                             string name = string.Empty;
+                             string issnNumber = string.Empty;
+                             string actualFileName = string.Empty;
+                             Model.ToList().ForEach((x) =>
+                             {
+                                 name = nameof(x.VolumeName);
+                                 issnNumber = nameof(x.IssnNo);
+                                 actualFileName = System.IO.Path.GetFileName(x.ActualFileName);
+                             });
+                             foreach (var journal in Model)
+                             {
+                                 <div id="modal-placeholder" style="display: none;">@actualFileName = @System.IO.Path.GetFileName(journal.ActualFileName)</div>
+                                 <div class="card-deck">
+                                     <div class="card">
+                                         <img src="~/img/acrobatPdf.jpg" alt="" class="card-img-top">
+                                         <div class="card-body">
+                                             <h5 class="card-title">@journal.VolumeName</h5>
+                                             <p class="card-text">@journal.IssnNo</p>
+                                             <p class="card-text">@journal.CopyrightYear</p>
+                                             <a class="btn btn-primary btn-circle float-right" 
+                                                asp-controller="Home" 
+                                                asp-action="DownloadJournals"
+                                                data-toggle="tooltip"
+                                                data-placement="right"
+                                                title="download journal"
+                                                id="cardLink"
+                                             >
+                                                 <i class="fa fa-file-download fa-3x"></i>
+                                             </a>
+                                         </div>
+                                         <div class="card-footer">
+                                             <small class="text-muted">Added On: @journal.CreatedAt</small>
+                                         </div>
+                                     </div>
+                                 </div>
+                             }
+                         }
+                     </div>
+                     
+                 </div>
+             </div>
+             <div class="modal-footer"></div>
+         </div>
+     </div>
+ </div>
+
+<!-- end Modal element -->
+
+
 
 @section Scripts
 {
-    <script >
+    <script>
         $(() => {
-           $('a[data-toggle="ajax-modal"]').click((evt) => {
-               evt.preventDefault();
-               
-           }) 
-        });
+            $('a[data-toggle="modal"]').click((evt) => {
+                evt.preventDefault();
+            });
+            $('a#cardLink').click((eve) => {
+                eve.preventDefault();
+                let formData = {
+                    volumnName : $('h5.card-title').text(),
+                    issnNumber : $('p.card-text:first').text()
+                };
+
+                $.ajax({
+                    url: "Home/DownloadJournals",
+                    cache: false,
+                    data: formData,
+                    method: "GET"
+                }).done((response) => {
+                    window.open('/Home/DownloadJournals?VolumeName='+formData.volumnName+'&IssnNumber='+formData.issnNumber, "_blank");
+                }).fail((error) => {
+                    console.log(error);
+                });
+
+            });
+        });        
     </script>
 }

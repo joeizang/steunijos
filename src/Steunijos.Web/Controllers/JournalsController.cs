@@ -19,6 +19,7 @@ namespace Steunijos.Web.Controllers
     {
         private readonly SteunijosContext _db;
         private readonly IWebHostEnvironment _env;
+        private List<ShowJournalViewModel> ShowJournalVM { get; set; }
 
         [TempData]
         public string Message { get; set; }
@@ -27,6 +28,7 @@ namespace Steunijos.Web.Controllers
         {
             _db = db;
             _env = env;
+            ShowJournalVM = new List<ShowJournalViewModel>();
         }
         // GET: Journal
         public async Task<ActionResult> Index()
@@ -69,50 +71,18 @@ namespace Steunijos.Web.Controllers
             return View();
         }
 
-        public ActionResult ShowJournals()
-        {
-            var journals = new ShowJournalViewModel();
-        }
-        
         [HttpGet]
-        public async Task<ActionResult> DownloadJournals(string journalName)
+        public async Task<ActionResult> ShowJournals()
         {
-            var uploadFolder = Path.Combine(_env.WebRootPath, "Uploads");
-            var fileDownload = Path.Combine(uploadFolder, journalName);
-
-            if (!System.IO.File.Exists(fileDownload))
-            {
-                return Json(
-                    new
-                    {
-                        ErrorMessage = "The file you are trying to download doesn't exist!",
-                        ErrorCode = 404
-                    });
-            }
-
-            var memoryStream = new MemoryStream();
-            Console.WriteLine($"Memory Stream created at { DateTimeOffset.UtcNow.LocalDateTime.ToString()}");
-            using (var stream = new FileStream(fileDownload, FileMode.Open))
-            {
-                Console.WriteLine($"File Stream created at { DateTimeOffset.UtcNow.LocalDateTime.ToString()}");
-                await stream.CopyToAsync(memoryStream);
-                Console.WriteLine($"File Stream copied to Memory Stream at { DateTimeOffset.UtcNow.LocalDateTime.ToString()}");
-            }
-
-            memoryStream.Position = 0;
-            Console.WriteLine($"Memory Stream position set at { DateTimeOffset.UtcNow.LocalDateTime.ToString()}");
-            return File(memoryStream, GetContentType(fileDownload), journalName);
-        }
-        
-        private string GetContentType(string path)
-        {
-            var provider = new FileExtensionContentTypeProvider();
-            string contentType;
-            if (!provider.TryGetContentType(path, out contentType))
-            {
-                contentType = "application/pdf";
-            }
-            return contentType;
+            ShowJournalVM = await _db.Journals.AsNoTracking()
+                .Select(j => new ShowJournalViewModel
+                {
+                    JournalYear = j.CopyrightYear,
+                    ActualFileName = Path.GetFileName(j.ActualPath),
+                    JournalVolumeName = j.VolumeName,
+                    JournalISSN = j.IssnNo
+                }).ToListAsync().ConfigureAwait(false);
+            return PartialView("_ShowJournals", ShowJournalVM);
         }
 
         // GET: Journal/Create
@@ -131,7 +101,7 @@ namespace Steunijos.Web.Controllers
                 var dir = $"{_env.WebRootPath}";
                 var uploadPath = Path.Combine(dir, "Uploads");
                 var journalPath = Path.Combine(uploadPath, "Journals");
-                var combinedPath = Path.Combine(journalPath, $"{DateTimeOffset.UtcNow.LocalDateTime.Ticks}{inputModel.File.FileName}");
+                var combinedPath = Path.Combine(journalPath, $"{inputModel.File.FileName}");
 
                 using (var fstream = new FileStream(combinedPath, FileMode.Create, FileAccess.Write))
                 {
