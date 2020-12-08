@@ -86,7 +86,8 @@ namespace Steunijos.Web.Controllers
                     //rename the file on disk to a new name
                     var copyPath = Path.Combine(uploadPath, $"{DateTimeOffset.Now.Ticks.ToString()}-{Guid.NewGuid().ToString()}{fileInfo.Extension}");
                     fileInfo.CopyTo(copyPath);
-                    var enumName = EnumValueToStringConverter.ConvertToString(submitPaper.SubjectArea);
+                    //var enumName = EnumValueToStringConverter.ConvertToString(submitPaper.SubjectArea);
+                    var enumName = submitPaper.SubjectArea.ConvertToString();
                     //save paper to db after taking all the info from submitPaper
                     var paper = new Paper
                     {
@@ -117,29 +118,6 @@ namespace Steunijos.Web.Controllers
 
             ViewBag.Message = "Upload Successful!";
             return RedirectToRoute(new { controller = "Papers", action = "Index" });
-        }
-
-        // GET: Paper/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: Paper/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
         }
 
         // GET: Paper/Delete/5

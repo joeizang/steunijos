@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -94,7 +95,7 @@ namespace Steunijos.Web.Controllers
         // POST: Journal/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(JournalInputModel inputModel)
+        public async Task<ActionResult> Create(JournalInputModel inputModel, CancellationToken token)
         {
             try
             {
@@ -107,12 +108,15 @@ namespace Steunijos.Web.Controllers
                 {
                     var fileInfo = new FileInfo(combinedPath);
 
-                    await inputModel.File.CopyToAsync(fstream);
+                    //TODO: check that the file size isn't too big, figure out way to not accept executables or other file types.
+                    //TODO: make sure that only authorized users can upload journals.
+
+                    await inputModel.File.CopyToAsync(fstream,token);
 
                     //rename the file on disk to a new name
 
                     var copyPath = Path.Combine(journalPath,
-                        $"{DateTimeOffset.Now.Ticks.ToString()}-{Guid.NewGuid().ToString()}{fileInfo.Extension}");
+                        $"{DateTimeOffset.Now.Ticks}-{Guid.NewGuid()}{fileInfo.Extension}");
                     fileInfo.CopyTo(copyPath);
 
                     //save paper to db after taking all the info from submitPaper
@@ -127,16 +131,17 @@ namespace Steunijos.Web.Controllers
                     };
 
                     _db.Journals.Add(journal);
-                    var pId = await _db.SaveChangesAsync().ConfigureAwait(false);
+                    var pId = await _db.SaveChangesAsync(token).ConfigureAwait(false);
                 }
             }
             catch (Exception e)
             {
                 Message = e.Message;
+                TempData["message"] = Message;
                 return View();
             }
 
-            Message = "Journal upload successful!";
+            Message = "Journal upload successful!"; //This should be a tempdata artifact that will be displayed on success.
 
             return RedirectToRoute(new { controller = "Home", action = "Index" });
         }

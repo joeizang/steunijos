@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -42,10 +43,21 @@ namespace Steunijos.Web.Controllers
         }
 
         // GET: Contact/Details/5
-        public ActionResult Details(int id)
+        public async Task<ActionResult> Details(string id, CancellationToken token)
         {
             //show the message sent by its id
-            var details = new ContactUsDetailModel();
+            var details = await _db.ContactUsSubmissions.AsNoTracking()
+                .Where(x => x.SubmissionId.Equals(id))
+                .Select(c => new ContactUsDetailModel
+                {
+                    EmailAddress = c.SendersEmail,
+                    FullName = c.SendersFullName,
+                    MessageType = c.MessageType,
+                    SubmissionDate = c.SubmissionDate,
+                    SubmissionId = c.SubmissionId,
+                    SubmittedMessage = c.MessageSent
+                }).SingleOrDefaultAsync(token).ConfigureAwait(false);
+
             return View(details);
         }
 
@@ -61,26 +73,25 @@ namespace Steunijos.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> SendContact(ContactUsInputModel sent)
         {
-            SmtpClient client;
             try
             {
                 if (ModelState.IsValid)
                 {
                     var username = _config.GetValue<string>("Gmail:Username");
                     var password = _config.GetValue<string>("Gmail:Password");
-                    client = new SmtpClient
+                    var client = new SmtpClient
                     {
                         Host = _config.GetValue<string>("Gmail:Host"),
                         Port = _config.GetValue<int>("Gmail:Port"),
                         EnableSsl = bool.Parse(_config["Gmail:SMTP:starttls:enable"]),
                         Credentials = new NetworkCredential(username, password)
                     };
-                    
-                    var mail = new MailMessage(sent.EmailAddress, username);
-                    mail.Subject = sent.MessageType.ToString();
-                    mail.Body = sent.Message;
-                    mail.IsBodyHtml = true;
-                    
+
+                    var mail = new MailMessage(sent.EmailAddress, username)
+                    {
+                        Subject = sent.MessageType.ToString(), Body = sent.Message, IsBodyHtml = true
+                    };
+
                     client.Send(mail);
 
                     var contactSubmit = new ContactUsSubmission
