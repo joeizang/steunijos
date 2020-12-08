@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Steunijos.Web.Data;
@@ -52,16 +53,29 @@ namespace Steunijos.Web.Controllers
         }
 
         // GET: Paper/Details/5
-        public ActionResult Details(string id)
+        public async Task<ActionResult> Details(string id, CancellationToken token)
         {
+            var paper = await _db.Papers.AsNoTracking()
+                .Where(p => p.PaperId == id)
+                .Select(p => new PaperDetailsViewModel
+                {
+                    AuthorName = p.AuthorName,
+                    JournalId = p.JournalId,
+                    PaperId = p.PaperId,
+                    PaperOriginalName = p.PaperOriginalName,
+                    SubjectArea = p.SavedPath,
+                    ThumbnailPath = p.ThumbnailPath
+                }).SingleOrDefaultAsync(token).ConfigureAwait(false);
             
-            return View();
+            return View(paper);
         }
 
         public ActionResult SubmitPaper()
         {
-            var submitPaper = new SubmitPaper();
-            submitPaper.SubjectArea = SubjectAreaEnum.Select_a_Subject_Area;
+            var submitPaper = new SubmitPaper
+            {
+                SubjectArea = SubjectAreaEnum.Select_a_Subject_Area
+            };
 
             return View(submitPaper);
         }
@@ -84,7 +98,7 @@ namespace Steunijos.Web.Controllers
                     await submitPaper.File.CopyToAsync(fstream);
                     var fileInfo = new FileInfo(combinedPath);
                     //rename the file on disk to a new name
-                    var copyPath = Path.Combine(uploadPath, $"{DateTimeOffset.Now.Ticks.ToString()}-{Guid.NewGuid().ToString()}{fileInfo.Extension}");
+                    var copyPath = Path.Combine(uploadPath, $"{DateTimeOffset.Now.Ticks}-{Guid.NewGuid()}{fileInfo.Extension}");
                     fileInfo.CopyTo(copyPath);
                     //var enumName = EnumValueToStringConverter.ConvertToString(submitPaper.SubjectArea);
                     var enumName = submitPaper.SubjectArea.ConvertToString();

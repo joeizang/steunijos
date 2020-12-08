@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -93,10 +94,14 @@ namespace Steunijos.Web.Controllers
         }
 
         // POST: Journal/Create
+        //[Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(JournalInputModel inputModel, CancellationToken token)
         {
+            //TODO: check that the file size isn't too big, figure out way to not accept executables or other file types.
+            if (inputModel.File.Length <= 0 || inputModel.File.Length > 11L
+                                            || inputModel.File.ContentType != "application/pdf") return View();
             try
             {
                 var dir = $"{_env.WebRootPath}";
@@ -108,7 +113,7 @@ namespace Steunijos.Web.Controllers
                 {
                     var fileInfo = new FileInfo(combinedPath);
 
-                    //TODO: check that the file size isn't too big, figure out way to not accept executables or other file types.
+                    
                     //TODO: make sure that only authorized users can upload journals.
 
                     await inputModel.File.CopyToAsync(fstream,token);
