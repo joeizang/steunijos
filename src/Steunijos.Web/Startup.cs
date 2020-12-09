@@ -38,9 +38,9 @@ namespace Steunijos.Web
         {
             services.AddDbContext<SteunijosContext>(options =>
                 options.UseMySql(
-                    "Server=localhost;Database=steunijosdb;User=root;Password=5t#uniJ0s-2020", options =>
+                    "Server=localhost;Database=steunijosdb;User=steunijos;Password=t#5tP@55wd", opt =>
                     {
-                        options.ServerVersion(new Version(5, 7, 27), ServerType.MySql);
+                        opt.ServerVersion(new Version(5, 7, 27), ServerType.MySql);
                     }));
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<ApplicationRole>()

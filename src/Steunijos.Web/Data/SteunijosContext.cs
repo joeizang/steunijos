@@ -32,8 +32,15 @@ namespace Steunijos.Web.Data
             builder.Entity<Journal>()
                 .HasOne(x => x.TableOfContents)
                 .WithOne(j => j.Journal)
-                .HasForeignKey<JournalContent>(f => f.JournalIssnNo);
-            
+                .HasForeignKey<JournalContent>(f => f.JournalId);
+            builder.Entity<Journal>()
+                .HasIndex(j => j.IssnNo);
+            builder.Entity<Journal>()
+                .HasIndex(j => j.JournalId);
+            builder.Entity<Journal>()
+                .HasIndex(j => j.VolumeName);
+
+
         }
 
         public DbSet<ContactUsSubmission> ContactUsSubmissions { get; set; }

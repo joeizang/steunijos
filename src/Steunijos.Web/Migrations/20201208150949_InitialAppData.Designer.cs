@@ -9,14 +9,14 @@ using Steunijos.Web.Data;
 namespace Steunijos.Web.Migrations
 {
     [DbContext(typeof(SteunijosContext))]
-    [Migration("20200316082623_AddedTableOfContents")]
-    partial class AddedTableOfContents
+    [Migration("20201208150949_InitialAppData")]
+    partial class InitialAppData
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.2")
+                .HasAnnotation("ProductVersion", "3.1.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -288,11 +288,13 @@ namespace Steunijos.Web.Migrations
 
             modelBuilder.Entity("Steunijos.Web.Models.Journal", b =>
                 {
-                    b.Property<string>("IssnNo")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+                    b.Property<string>("JournalId")
+                        .HasColumnType("varchar(150) CHARACTER SET utf8mb4")
+                        .HasMaxLength(150);
 
                     b.Property<string>("ActualPath")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(300) CHARACTER SET utf8mb4")
+                        .HasMaxLength(300);
 
                     b.Property<DateTimeOffset>("CopyrightYear")
                         .HasColumnType("datetime(6)");
@@ -300,16 +302,29 @@ namespace Steunijos.Web.Migrations
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("IssnNo")
+                        .HasColumnType("varchar(20) CHARACTER SET utf8mb4")
+                        .HasMaxLength(20);
+
                     b.Property<string>("JournalContentId")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(150) CHARACTER SET utf8mb4")
+                        .HasMaxLength(150);
 
                     b.Property<string>("SavedPath")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(300) CHARACTER SET utf8mb4")
+                        .HasMaxLength(300);
 
                     b.Property<string>("VolumeName")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(50) CHARACTER SET utf8mb4")
+                        .HasMaxLength(50);
 
-                    b.HasKey("IssnNo");
+                    b.HasKey("JournalId");
+
+                    b.HasIndex("IssnNo");
+
+                    b.HasIndex("JournalId");
+
+                    b.HasIndex("VolumeName");
 
                     b.ToTable("Journals");
                 });
@@ -317,16 +332,19 @@ namespace Steunijos.Web.Migrations
             modelBuilder.Entity("Steunijos.Web.Models.JournalContent", b =>
                 {
                     b.Property<string>("JournalContentId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(150) CHARACTER SET utf8mb4")
+                        .HasMaxLength(150);
 
                     b.Property<string>("AuthorId")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<string>("ContentTitle")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(150) CHARACTER SET utf8mb4")
+                        .HasMaxLength(150);
 
-                    b.Property<string>("JournalIssnNo")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+                    b.Property<string>("JournalId")
+                        .HasColumnType("varchar(150) CHARACTER SET utf8mb4")
+                        .HasMaxLength(150);
 
                     b.Property<int>("JournalPosition")
                         .HasColumnType("int");
@@ -335,7 +353,7 @@ namespace Steunijos.Web.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.HasIndex("JournalIssnNo")
+                    b.HasIndex("JournalId")
                         .IsUnique();
 
                     b.ToTable("JournalContents");
@@ -344,37 +362,47 @@ namespace Steunijos.Web.Migrations
             modelBuilder.Entity("Steunijos.Web.Models.Paper", b =>
                 {
                     b.Property<string>("PaperId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(150) CHARACTER SET utf8mb4")
+                        .HasMaxLength(150);
 
                     b.Property<string>("ActualPath")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(300) CHARACTER SET utf8mb4")
+                        .HasMaxLength(300);
 
                     b.Property<string>("AuthorName")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(150) CHARACTER SET utf8mb4")
+                        .HasMaxLength(150);
 
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("JournalId")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(150) CHARACTER SET utf8mb4")
+                        .HasMaxLength(150);
 
                     b.Property<string>("PaperOriginalName")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(250) CHARACTER SET utf8mb4")
+                        .HasMaxLength(250);
 
                     b.Property<string>("PaperTopic")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(250) CHARACTER SET utf8mb4")
+                        .HasMaxLength(250);
 
                     b.Property<string>("SavedPath")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(300) CHARACTER SET utf8mb4")
+                        .HasMaxLength(300);
 
                     b.Property<string>("SubjectAreaId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(150) CHARACTER SET utf8mb4")
+                        .HasMaxLength(150);
 
                     b.Property<string>("ThumbnailPath")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(300) CHARACTER SET utf8mb4")
+                        .HasMaxLength(300);
 
                     b.Property<string>("Title")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(50) CHARACTER SET utf8mb4")
+                        .HasMaxLength(50);
 
                     b.Property<DateTimeOffset>("UpdatedAt")
                         .HasColumnType("datetime(6)");
@@ -389,13 +417,15 @@ namespace Steunijos.Web.Migrations
             modelBuilder.Entity("Steunijos.Web.Models.PaperPayment", b =>
                 {
                     b.Property<string>("PaperPaymentId")
-                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(150) CHARACTER SET utf8mb4")
+                        .HasMaxLength(150);
 
                     b.Property<decimal>("AmountPaid")
                         .HasColumnType("decimal(65,30)");
 
                     b.Property<string>("AuthorName")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(150) CHARACTER SET utf8mb4")
+                        .HasMaxLength(150);
 
                     b.Property<string>("PaperAuthorId")
                         .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
@@ -404,7 +434,8 @@ namespace Steunijos.Web.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("TellerNumber")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(150) CHARACTER SET utf8mb4")
+                        .HasMaxLength(150);
 
                     b.HasKey("PaperPaymentId");
 
@@ -461,22 +492,26 @@ namespace Steunijos.Web.Migrations
 
                     b.Property<string>("DepartmentName")
                         .HasColumnName("PaperAuthor_DepartmentName")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(150) CHARACTER SET utf8mb4")
+                        .HasMaxLength(150);
 
                     b.Property<string>("Designation")
                         .HasColumnName("PaperAuthor_Designation")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(20) CHARACTER SET utf8mb4")
+                        .HasMaxLength(20);
 
                     b.Property<string>("FacultyName")
                         .HasColumnName("PaperAuthor_FacultyName")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(150) CHARACTER SET utf8mb4")
+                        .HasMaxLength(150);
 
                     b.Property<bool>("IsValidAuthor")
                         .HasColumnType("tinyint(1)");
 
                     b.Property<string>("UniversityName")
                         .HasColumnName("PaperAuthor_UniversityName")
-                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+                        .HasColumnType("varchar(150) CHARACTER SET utf8mb4")
+                        .HasMaxLength(150);
 
                     b.Property<DateTimeOffset>("UpdatedAt")
                         .HasColumnType("datetime(6)");
@@ -543,7 +578,7 @@ namespace Steunijos.Web.Migrations
 
                     b.HasOne("Steunijos.Web.Models.Journal", "Journal")
                         .WithOne("TableOfContents")
-                        .HasForeignKey("Steunijos.Web.Models.JournalContent", "JournalIssnNo");
+                        .HasForeignKey("Steunijos.Web.Models.JournalContent", "JournalId");
                 });
 
             modelBuilder.Entity("Steunijos.Web.Models.Paper", b =>

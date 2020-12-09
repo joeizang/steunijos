@@ -100,7 +100,7 @@ namespace Steunijos.Web.Controllers
         public async Task<ActionResult> Create(JournalInputModel inputModel, CancellationToken token)
         {
             //TODO: check that the file size isn't too big, figure out way to not accept executables or other file types.
-            if (inputModel.File.Length <= 0 || inputModel.File.Length > 11L
+            if (inputModel.File.Length <= 0 || inputModel.File.Length > 114800000L
                                             || inputModel.File.ContentType != "application/pdf") return View();
             try
             {

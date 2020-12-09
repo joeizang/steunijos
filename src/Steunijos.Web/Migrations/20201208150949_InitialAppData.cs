@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Steunijos.Web.Migrations
 {
-    public partial class InitialDb : Migration
+    public partial class InitialAppData : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -56,10 +56,10 @@ namespace Steunijos.Web.Migrations
                     DepartmentName = table.Column<string>(nullable: true),
                     FacultyName = table.Column<string>(nullable: true),
                     UniversityName = table.Column<string>(nullable: true),
-                    PaperAuthor_Designation = table.Column<string>(nullable: true),
-                    PaperAuthor_DepartmentName = table.Column<string>(nullable: true),
-                    PaperAuthor_FacultyName = table.Column<string>(nullable: true),
-                    PaperAuthor_UniversityName = table.Column<string>(nullable: true),
+                    PaperAuthor_Designation = table.Column<string>(maxLength: 20, nullable: true),
+                    PaperAuthor_DepartmentName = table.Column<string>(maxLength: 150, nullable: true),
+                    PaperAuthor_FacultyName = table.Column<string>(maxLength: 150, nullable: true),
+                    PaperAuthor_UniversityName = table.Column<string>(maxLength: 150, nullable: true),
                     IsValidAuthor = table.Column<bool>(nullable: true),
                     CreatedAt = table.Column<DateTimeOffset>(nullable: true),
                     UpdatedAt = table.Column<DateTimeOffset>(nullable: true)
@@ -91,16 +91,18 @@ namespace Steunijos.Web.Migrations
                 name: "Journals",
                 columns: table => new
                 {
-                    IssnNo = table.Column<string>(nullable: false),
-                    VolumeName = table.Column<string>(nullable: true),
-                    ActualPath = table.Column<string>(nullable: true),
-                    SavedPath = table.Column<string>(nullable: true),
+                    JournalId = table.Column<string>(maxLength: 150, nullable: false),
+                    IssnNo = table.Column<string>(maxLength: 20, nullable: true),
+                    VolumeName = table.Column<string>(maxLength: 50, nullable: true),
+                    ActualPath = table.Column<string>(maxLength: 300, nullable: true),
+                    SavedPath = table.Column<string>(maxLength: 300, nullable: true),
                     CopyrightYear = table.Column<DateTimeOffset>(nullable: false),
-                    CreatedAt = table.Column<DateTimeOffset>(nullable: false)
+                    CreatedAt = table.Column<DateTimeOffset>(nullable: false),
+                    JournalContentId = table.Column<string>(maxLength: 150, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Journals", x => x.IssnNo);
+                    table.PrimaryKey("PK_Journals", x => x.JournalId);
                 });
 
             migrationBuilder.CreateTable(
@@ -225,10 +227,10 @@ namespace Steunijos.Web.Migrations
                 name: "Payments",
                 columns: table => new
                 {
-                    PaperPaymentId = table.Column<string>(nullable: false),
-                    TellerNumber = table.Column<string>(nullable: true),
+                    PaperPaymentId = table.Column<string>(maxLength: 150, nullable: false),
+                    TellerNumber = table.Column<string>(maxLength: 150, nullable: true),
                     AmountPaid = table.Column<decimal>(nullable: false),
-                    AuthorName = table.Column<string>(nullable: true),
+                    AuthorName = table.Column<string>(maxLength: 150, nullable: true),
                     PaymentDate = table.Column<DateTimeOffset>(nullable: false),
                     PaperAuthorId = table.Column<string>(nullable: true)
                 },
@@ -247,11 +249,11 @@ namespace Steunijos.Web.Migrations
                 name: "JournalContents",
                 columns: table => new
                 {
-                    JournalContentId = table.Column<string>(nullable: false),
-                    ContentTitle = table.Column<string>(nullable: true),
+                    JournalContentId = table.Column<string>(maxLength: 150, nullable: false),
+                    ContentTitle = table.Column<string>(maxLength: 150, nullable: true),
                     AuthorId = table.Column<string>(nullable: true),
                     JournalPosition = table.Column<int>(nullable: false),
-                    JournalIssnNo = table.Column<string>(nullable: true)
+                    JournalId = table.Column<string>(maxLength: 150, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -263,10 +265,10 @@ namespace Steunijos.Web.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_JournalContents_Journals_JournalIssnNo",
-                        column: x => x.JournalIssnNo,
+                        name: "FK_JournalContents_Journals_JournalId",
+                        column: x => x.JournalId,
                         principalTable: "Journals",
-                        principalColumn: "IssnNo",
+                        principalColumn: "JournalId",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -274,18 +276,18 @@ namespace Steunijos.Web.Migrations
                 name: "Papers",
                 columns: table => new
                 {
-                    PaperId = table.Column<string>(nullable: false),
-                    Title = table.Column<string>(nullable: true),
-                    SavedPath = table.Column<string>(nullable: true),
-                    AuthorName = table.Column<string>(nullable: true),
-                    PaperOriginalName = table.Column<string>(nullable: true),
-                    ActualPath = table.Column<string>(nullable: true),
-                    SubjectAreaId = table.Column<string>(nullable: true),
-                    PaperTopic = table.Column<string>(nullable: true),
-                    JournalId = table.Column<string>(nullable: true),
+                    PaperId = table.Column<string>(maxLength: 150, nullable: false),
+                    Title = table.Column<string>(maxLength: 50, nullable: true),
+                    SavedPath = table.Column<string>(maxLength: 300, nullable: true),
+                    AuthorName = table.Column<string>(maxLength: 150, nullable: true),
+                    PaperOriginalName = table.Column<string>(maxLength: 250, nullable: true),
+                    ActualPath = table.Column<string>(maxLength: 300, nullable: true),
+                    SubjectAreaId = table.Column<string>(maxLength: 150, nullable: true),
+                    PaperTopic = table.Column<string>(maxLength: 250, nullable: true),
+                    JournalId = table.Column<string>(maxLength: 150, nullable: true),
                     CreatedAt = table.Column<DateTimeOffset>(nullable: false),
                     UpdatedAt = table.Column<DateTimeOffset>(nullable: false),
-                    ThumbnailPath = table.Column<string>(nullable: true)
+                    ThumbnailPath = table.Column<string>(maxLength: 300, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -341,9 +343,25 @@ namespace Steunijos.Web.Migrations
                 column: "AuthorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_JournalContents_JournalIssnNo",
+                name: "IX_JournalContents_JournalId",
                 table: "JournalContents",
-                column: "JournalIssnNo");
+                column: "JournalId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Journals_IssnNo",
+                table: "Journals",
+                column: "IssnNo");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Journals_JournalId",
+                table: "Journals",
+                column: "JournalId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Journals_VolumeName",
+                table: "Journals",
+                column: "VolumeName");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Papers_SubjectAreaId",

@@ -1,0 +1,12 @@
+version: "3.7"
+services:
+  steunijos:
+    image: mysql:5.7.32
+    env_file:
+      - dbservice.env
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - 3306:3306
+volumes:
+  mysql-data:

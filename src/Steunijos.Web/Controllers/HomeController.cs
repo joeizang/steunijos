@@ -1,4 +1,5 @@
-﻿using System;
+﻿using System.Threading;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Steunijos.Web.Data;
 using Steunijos.Web.ViewModels.Journal;
 
@@ -16,11 +18,13 @@ namespace Steunijos.Web.Controllers
     {
         private readonly SteunijosContext _db;
         private readonly IWebHostEnvironment _env;
+        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(SteunijosContext db, IWebHostEnvironment env)
+        public HomeController(SteunijosContext db, IWebHostEnvironment env, ILogger<HomeController> logger)
         {
             _db = db;
             _env = env;
+            _logger = logger;
         }
 
         public async Task<IActionResult> Index()
@@ -45,29 +49,22 @@ namespace Steunijos.Web.Controllers
         }
         
         [HttpGet]
-        public async Task<ActionResult> DownloadJournals([FromQuery] JournalDownloadModel model)
+        public async Task<ActionResult> DownloadJournals([FromQuery] JournalDownloadModel model, CancellationToken token)
         {
-            var journal = await _db.Journals.AsNoTracking()
-                .SingleOrDefaultAsync(x => x.VolumeName.Equals(model.VolumeName) || 
-                                           x.IssnNo.Equals(model.IssnNumber))
-                .ConfigureAwait(false);
-
-            var fileName = Path.GetFileName(journal.ActualPath);
-            var uploadFolder = Path.Combine(_env.WebRootPath, "Uploads");
-            var fileDownload = Path.Combine(uploadFolder, fileName);
-            //var file = new FileInfo(fileDownload);
-            // if (!file.Exists)
-            // {
-            //     return Json(
-            //         new
-            //         {
-            //             ErrorMessage = "The file you are trying to download doesn't exist!",
-            //             ErrorCode = 404
-            //         });
-            // }
-
             try
             {
+                var journal = await _db.Journals.AsNoTracking()
+                    .SingleOrDefaultAsync(x => x.VolumeName.Equals(model.VolumeName) &&
+                                               x.IssnNo.Equals(model.IssnNumber), token).ConfigureAwait(false);
+
+                _logger.LogInformation($"Found target Journal {journal.VolumeName}");
+
+                var fileName = Path.GetFileName(journal.ActualPath);
+                var uploadFolder = Path.Combine(_env.WebRootPath, "Uploads");
+                var journalPath = Path.Combine(uploadFolder, "Journals");
+                var fileDownload = Path.Combine(journalPath, fileName);
+
+                _logger.LogInformation("Path to file for download is ready!");
                 var memoryStream = new MemoryStream();
                 Console.WriteLine($"Memory Stream created at { DateTimeOffset.UtcNow.LocalDateTime.ToString()}");
                 using (var stream = new FileStream(journal.ActualPath, FileMode.Open))
