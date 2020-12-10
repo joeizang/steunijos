@@ -7,6 +7,7 @@ namespace Steunijos.Web.ViewModels.Journal
 {
     public class JournalReadModel
     {
+        public string JournalId { get; set; }
         public string IssnNo { get; set; }
 
         public string VolumeName { get; set; }

@@ -37,6 +37,7 @@ namespace Steunijos.Web.Controllers
             var journals = await _db.Journals.AsNoTracking()
                               .Select(j => new JournalReadModel
                               {
+                                  JournalId = j.JournalId,
                                   CopyrightYear = j.CopyrightYear,
                                   IssnNo = j.IssnNo,
                                   VolumeName = j.VolumeName,
@@ -55,7 +56,7 @@ namespace Steunijos.Web.Controllers
             {
                 var journal = await _db.Journals.AsNoTracking()
                     .SingleOrDefaultAsync(x => x.VolumeName.Equals(model.VolumeName) &&
-                                               x.IssnNo.Equals(model.IssnNumber), token).ConfigureAwait(false);
+                                               x.JournalId.Equals(model.JournalId), token).ConfigureAwait(false);
 
                 _logger.LogInformation($"Found target Journal {journal.VolumeName}");
 

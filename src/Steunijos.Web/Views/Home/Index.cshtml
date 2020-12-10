@@ -208,28 +208,32 @@
                             
                             <div class="card-deck">
                                 @{
-                                    var counter = 0;
                                     var actualFileName = string.Empty;
+                                    var anchorId = string.Empty;
                                     foreach (var journal in Model)
                                     {
-                                        counter++;
                                         <div id="modal-placeholder" style="display: none;">
                                             @actualFileName = @System.IO.Path.GetFileName(journal.ActualFileName)
+                                            @anchorId = journal.VolumeName;
                                         </div>
-
                                         <div class="card">
                                             <img src="~/img/acrobatPdf.jpg" alt="" class="card-img-top">
                                             <div class="card-body">
+                                                <small>@journal.JournalId</small>
                                                 <h5 id="volName" class="card-title">@journal.VolumeName</h5>
                                                 <p id="issnNo" class="card-text">@journal.IssnNo</p>
                                                 <p class="card-text">@journal.CopyrightYear</p>
+                                                <span id="plinks" style="display: none;"></span>
                                                 <a class="btn btn-primary btn-circle float-right"
                                                    asp-controller="Home"
-                                                   asp-action="DownloadJournals"
+                                                   asp-action="DownloadJournals",
+                                                   asp-route-VolumeName="@journal.VolumeName"
+                                                   asp-route-JournalId="@journal.JournalId"
                                                    data-toggle="tooltip"
                                                    data-placement="right"
                                                    title="download journal"
-                                                   id="cardLink">
+                                                   id="cardLink"
+                                                >
                                                     <i class="fa fa-file-download fa-3x"></i>
                                                 </a>
                                             </div>
@@ -244,7 +248,7 @@
 
                     </div>
                 </div>
-
+                    
                 <div class="modal-footer"></div>
             </div>
         </div>
@@ -258,32 +262,9 @@
 {
     <script>
         $(() => {
+            let formData = []
             $('a[data-toggle="modal"]').click((evt) => {
                 evt.preventDefault();
-            });
-            $('a#cardLink').click((eve) => {
-                eve.preventDefault();
-                let formData = []
-
-                let numberOfCards = $('.card').each((x) => {
-                    formData.push({
-                        volumeName: $('#volName').text(),
-                        issnNumber: $('#issnNo').text()
-                    });
-                });
-                console.log(formData);
-
-                //$.ajax({
-                //    url: "Home/DownloadJournals",
-                //    cache: false,
-                //    data: formData,
-                //    method: "GET"
-                //}).done((response) => {
-                //    window.open('/Home/DownloadJournals?VolumeName=' + formData.volumeName + '&IssnNumber=' + formData.issnNumber, "_blank");
-                //}).fail((error) => {
-                //    console.log(error);
-                //});
-
             });
         });
     </script>
