@@ -20,7 +20,6 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Steunijos.Web.SteunijosServices;
 using Microsoft.Extensions.FileProviders;
 using System.IO;
-using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 
 namespace Steunijos.Web
 {
@@ -37,11 +36,7 @@ namespace Steunijos.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<SteunijosContext>(options =>
-                options.UseMySql(
-                    "Server=localhost;Database=steunijosdb;User=steunijos;Password=t#5tP@55wd", opt =>
-                    {
-                        opt.ServerVersion(new Version(5, 7, 27), ServerType.MySql);
-                    }));
+                options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<ApplicationRole>()
                 .AddEntityFrameworkStores<SteunijosContext>();
@@ -70,7 +65,6 @@ namespace Steunijos.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
             }
             else
             {

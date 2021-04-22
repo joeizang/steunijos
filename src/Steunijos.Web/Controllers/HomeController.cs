@@ -38,7 +38,7 @@ namespace Steunijos.Web.Controllers
                               .Select(j => new JournalReadModel
                               {
                                   JournalId = j.JournalId,
-                                  CopyrightYear = j.CopyrightYear,
+                                  CopyrightYear = j.CopyrightYear.Value,
                                   IssnNo = j.IssnNo,
                                   VolumeName = j.VolumeName,
                                   ActualFileName = j.ActualPath,

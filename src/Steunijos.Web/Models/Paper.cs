@@ -36,9 +36,9 @@ namespace Steunijos.Web.Models
         [StringLength(150)]
         public string JournalId { get; set; }
 
-        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow.LocalDateTime;
 
-        public DateTimeOffset UpdatedAt { get; set; }
+        public DateTimeOffset? UpdatedAt { get; set; }
 
         [StringLength(300)]
         public string ThumbnailPath { get; set; }

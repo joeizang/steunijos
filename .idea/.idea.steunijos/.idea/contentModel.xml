@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="$USER_HOME$/.cache/JetBrains/Rider2020.2/extResources" t="IncludeRecursive" />
-    <e p="$USER_HOME$/.cache/JetBrains/Rider2020.2/resharper-host/local/Transient/Rider/v202/SolutionCaches/_steunijos.-2019215821.00" t="ExcludeRecursive" />
-    <e p="$PROJECT_DIR$" t="IncludeFlat">
+    <e p="C:\Users\JOSEPH\AppData\local\JetBrains\Rider2020.3\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\JOSEPH\AppData\local\JetBrains\Rider2020.3\resharper-host\local\Transient\Rider\v203\SolutionCaches\_steunijos.-791138086.00" t="ExcludeRecursive" />
+    <e p="C:\Users\JOSEPH\source\repos\steunijos" t="IncludeFlat">
       <e p="packages" t="ExcludeRecursive" />
       <e p="src" t="Include">
         <e p="Steunijos.Web" t="IncludeRecursive">
+          <e p="_ViewImports.cshtml" t="Include" />
+          <e p="_ViewStart.cshtml" t="Include" />
           <e p="Abstractions" t="Include">
             <e p="FileTypeBase.cs" t="Include" />
             <e p="IDocumentPersistenceService.cs" t="Include" />
@@ -15,6 +17,8 @@
             <e p="IPdfPersistenceService.cs" t="Include" />
             <e p="IPersistenceService.cs" t="Include" />
           </e>
+          <e p="appsettings.Development.json" t="Include" />
+          <e p="appsettings.json" t="Include" />
           <e p="Areas" t="Include">
             <e p="Admin" t="Include">
               <e p="Controllers" t="Include">
@@ -30,7 +34,12 @@
             <e p="Identity" t="Include">
               <e p="IdentityHostingStartup.cs" t="Include" />
               <e p="Pages" t="Include">
+                <e p="_ValidationScriptsPartial.cshtml" t="Include" />
+                <e p="_ViewImports.cshtml" t="Include" />
+                <e p="_ViewStart.cshtml" t="Include" />
                 <e p="Account" t="Include">
+                  <e p="_StatusMessage.cshtml" t="Include" />
+                  <e p="_ViewImports.cshtml" t="Include" />
                   <e p="AccessDenied.cshtml" t="Include" />
                   <e p="AccessDenied.cshtml.cs" t="Include" />
                   <e p="ConfirmEmail.cshtml" t="Include" />
@@ -55,6 +64,10 @@
                   <e p="Logout.cshtml" t="Include" />
                   <e p="Logout.cshtml.cs" t="Include" />
                   <e p="Manage" t="Include">
+                    <e p="_Layout.cshtml" t="Include" />
+                    <e p="_ManageNav.cshtml" t="Include" />
+                    <e p="_StatusMessage.cshtml" t="Include" />
+                    <e p="_ViewImports.cshtml" t="Include" />
                     <e p="ChangePassword.cshtml" t="Include" />
                     <e p="ChangePassword.cshtml.cs" t="Include" />
                     <e p="DeletePersonalData.cshtml" t="Include" />
@@ -84,10 +97,6 @@
                     <e p="ShowRecoveryCodes.cshtml.cs" t="Include" />
                     <e p="TwoFactorAuthentication.cshtml" t="Include" />
                     <e p="TwoFactorAuthentication.cshtml.cs" t="Include" />
-                    <e p="_Layout.cshtml" t="Include" />
-                    <e p="_ManageNav.cshtml" t="Include" />
-                    <e p="_StatusMessage.cshtml" t="Include" />
-                    <e p="_ViewImports.cshtml" t="Include" />
                   </e>
                   <e p="Register.cshtml" t="Include" />
                   <e p="Register.cshtml.cs" t="Include" />
@@ -97,17 +106,14 @@
                   <e p="ResetPassword.cshtml.cs" t="Include" />
                   <e p="ResetPasswordConfirmation.cshtml" t="Include" />
                   <e p="ResetPasswordConfirmation.cshtml.cs" t="Include" />
-                  <e p="_StatusMessage.cshtml" t="Include" />
-                  <e p="_ViewImports.cshtml" t="Include" />
                 </e>
                 <e p="Error.cshtml" t="Include" />
                 <e p="Error.cshtml.cs" t="Include" />
-                <e p="_ValidationScriptsPartial.cshtml" t="Include" />
-                <e p="_ViewImports.cshtml" t="Include" />
-                <e p="_ViewStart.cshtml" t="Include" />
               </e>
             </e>
           </e>
+          <e p="bin" t="ExcludeRecursive" />
+          <e p="clientGoogle.json" t="Include" />
           <e p="Controllers" t="Include">
             <e p="ContactController.cs" t="Include" />
             <e p="EditorsController.cs" t="Include" />
@@ -120,12 +126,14 @@
           <e p="Data" t="Include">
             <e p="SteunijosContext.cs" t="Include" />
           </e>
+          <e p="dbservice.env" t="Include" />
+          <e p="docker-compose.yml" t="Include" />
           <e p="FrameworkExtensions" t="Include">
             <e p="JPMIdentity.cs" t="Include" />
           </e>
           <e p="Migrations" t="Include">
-            <e p="20201208150949_InitialAppData.Designer.cs" t="Include" />
             <e p="20201208150949_InitialAppData.cs" t="Include" />
+            <e p="20201208150949_InitialAppData.Designer.cs" t="Include" />
             <e p="SteunijosContextModelSnapshot.cs" t="Include" />
           </e>
           <e p="Models" t="Include">
@@ -147,6 +155,14 @@
             <e p="PdfFiletype.cs" t="Include" />
             <e p="SubjectArea.cs" t="Include" />
             <e p="SubjectAreaEnum.cs" t="Include" />
+          </e>
+          <e p="obj" t="ExcludeRecursive">
+            <e p="Debug" t="Include">
+              <e p="netcoreapp3.1" t="Include">
+                <e p="Steunijos.Web.AssemblyInfo.cs" t="Include" />
+                <e p="Steunijos.Web.RazorAssemblyInfo.cs" t="Include" />
+              </e>
+            </e>
           </e>
           <e p="Program.cs" t="Include" />
           <e p="ScaffoldingReadMe.txt" t="Include" />
@@ -208,9 +224,9 @@
               <e p="Privacy.cshtml" t="Include" />
             </e>
             <e p="Journals" t="Include">
+              <e p="_ShowJournals.cshtml" t="Include" />
               <e p="Create.cshtml" t="Include" />
               <e p="Index.cshtml" t="Include" />
-              <e p="_ShowJournals.cshtml" t="Include" />
             </e>
             <e p="Papers" t="Include">
               <e p="Details.cshtml" t="Include" />
@@ -218,42 +234,14 @@
               <e p="SubmitPaper.cshtml" t="Include" />
             </e>
             <e p="Shared" t="Include">
-              <e p="Error.cshtml" t="Include" />
               <e p="_Layout.cshtml" t="Include" />
               <e p="_LoginPartial.cshtml" t="Include" />
               <e p="_ValidationScriptsPartial.cshtml" t="Include" />
-            </e>
-          </e>
-          <e p="_ViewImports.cshtml" t="Include" />
-          <e p="_ViewStart.cshtml" t="Include" />
-          <e p="appsettings.Development.json" t="Include" />
-          <e p="appsettings.json" t="Include" />
-          <e p="bin" t="ExcludeRecursive" />
-          <e p="clientGoogle.json" t="Include" />
-          <e p="dbservice.env" t="Include" />
-          <e p="docker-compose.yml" t="Include" />
-          <e p="obj" t="ExcludeRecursive">
-            <e p="Debug" t="Include">
-              <e p="netcoreapp3.1" t="Include">
-                <e p="Steunijos.Web.AssemblyInfo.cs" t="Include" />
-                <e p="Steunijos.Web.RazorAssemblyInfo.cs" t="Include" />
-              </e>
+              <e p="Error.cshtml" t="Include" />
             </e>
           </e>
           <e p="wwwroot" t="Include">
-            <e p="Uploads" t="Include">
-              <e p="Journals" t="Include">
-                <e p="637430368376151826-66237305-0bda-4e88-a2a9-65d980efd0c1.pdf" t="Include" />
-                <e p="637430406912872240-a9420e98-8c41-4f53-b442-d64185fb7293.pdf" t="Include" />
-                <e p="637430407209518482-30829601-5a16-4e6a-9e37-b41e3ecf7bfe.pdf" t="Include" />
-                <e p="637432111248831577-c85dce6b-7429-4a37-b8b7-47edb979b3a9.pdf" t="Include" />
-                <e p="637432117853628564-76acd41e-b90e-4b20-8ada-a01ddcef4b0e.pdf" t="Include" />
-                <e p="IJRSTME - Vol. 6 No.2 2020.pdf" t="Include" />
-                <e p="IJRSTME Vol 6. No. 3, 2020.pdf" t="Include" />
-              </e>
-            </e>
             <e p="css" t="Include">
-              <e p="Pe-icon-7-stroke.css" t="Include" />
               <e p="ajax-loader.gif" t="Include" />
               <e p="all.css" t="Include" />
               <e p="bootstrap.min.css" t="Include" />
@@ -261,6 +249,7 @@
                 <e p="slick.ttf" t="Include" />
                 <e p="slick.woff" t="Include" />
               </e>
+              <e p="Pe-icon-7-stroke.css" t="Include" />
               <e p="responsive.css" t="Include" />
               <e p="site.css" t="Include" />
               <e p="slick-theme.css" t="Include" />
@@ -270,10 +259,6 @@
             </e>
             <e p="favicon.ico" t="Include" />
             <e p="fonts" t="Include">
-              <e p="Pe-icon-7-stroke.eot" t="Include" />
-              <e p="Pe-icon-7-stroke.svg" t="Include" />
-              <e p="Pe-icon-7-stroke.ttf" t="Include" />
-              <e p="Pe-icon-7-stroke.woff" t="Include" />
               <e p="fontawesome" t="Include">
                 <e p="fa-brands-400.eot" t="Include" />
                 <e p="fa-brands-400.svg" t="Include" />
@@ -291,6 +276,10 @@
                 <e p="fa-solid-900.woff" t="Include" />
                 <e p="fa-solid-900.woff2" t="Include" />
               </e>
+              <e p="Pe-icon-7-stroke.eot" t="Include" />
+              <e p="Pe-icon-7-stroke.svg" t="Include" />
+              <e p="Pe-icon-7-stroke.ttf" t="Include" />
+              <e p="Pe-icon-7-stroke.woff" t="Include" />
               <e p="themify" t="Include">
                 <e p="fonts" t="Include">
                   <e p="themify.eot" t="Include" />
@@ -303,9 +292,6 @@
             </e>
             <e p="img" t="Include">
               <e p="2-min.jpg" t="Include" />
-              <e p="DSC_7145.JPG" t="Include" />
-              <e p="LJ_academic.jpg" t="Include" />
-              <e p="Uni Jos.jpg" t="Include" />
               <e p="acrobatPdf.jpg" t="Include" />
               <e p="banner" t="Include">
                 <e p="about.jpg" t="Include" />
@@ -343,6 +329,7 @@
                 <e p="test-5.jpg" t="Include" />
                 <e p="test-6.jpg" t="Include" />
               </e>
+              <e p="DSC_7145.JPG" t="Include" />
               <e p="faculty_of_education.jpg" t="Include" />
               <e p="finalyearpaper.jpg" t="Include" />
               <e p="g-logo.jpg" t="Include" />
@@ -358,6 +345,7 @@
                 <e p="if_price-tag_1291777.svg" t="Include" />
                 <e p="if_target_1291767.svg" t="Include" />
               </e>
+              <e p="LJ_academic.jpg" t="Include" />
               <e p="p-1.jpg" t="Include" />
               <e p="p-2.jpg" t="Include" />
               <e p="p-3.jpg" t="Include" />
@@ -388,6 +376,7 @@
               <e p="steunijos-logo-small.png" t="Include" />
               <e p="steunijos-logo.png" t="Include" />
               <e p="tetfund-library-University-of-jos.png" t="Include" />
+              <e p="Uni Jos.jpg" t="Include" />
               <e p="work" t="Include">
                 <e p="10.jpg" t="Include" />
                 <e p="11.jpg" t="Include" />
@@ -408,7 +397,6 @@
             </e>
             <e p="lib" t="Include">
               <e p="bootstrap" t="Include">
-                <e p="LICENSE" t="Include" />
                 <e p="css" t="Include">
                   <e p="bootstrap-grid.css" t="Include" />
                   <e p="bootstrap-grid.css.map" t="Include" />
@@ -459,9 +447,9 @@
                   <e p="bootstrap.min.js" t="Include" />
                   <e p="bootstrap.min.js.map" t="Include" />
                 </e>
+                <e p="LICENSE" t="Include" />
               </e>
               <e p="jquery" t="Include">
-                <e p="LICENSE.txt" t="Include" />
                 <e p="core.js" t="Include" />
                 <e p="dist" t="Include">
                   <e p="jquery.js" t="Include" />
@@ -474,20 +462,32 @@
                 <e p="jquery.slim.js" t="Include" />
                 <e p="jquery.slim.min.js" t="Include" />
                 <e p="jquery.slim.min.map" t="Include" />
+                <e p="LICENSE.txt" t="Include" />
               </e>
               <e p="jquery-validation" t="Include">
-                <e p="LICENSE.md" t="Include" />
                 <e p="dist" t="Include">
                   <e p="additional-methods.js" t="Include" />
                   <e p="additional-methods.min.js" t="Include" />
                   <e p="jquery.validate.js" t="Include" />
                   <e p="jquery.validate.min.js" t="Include" />
                 </e>
+                <e p="LICENSE.md" t="Include" />
               </e>
               <e p="jquery-validation-unobtrusive" t="Include">
-                <e p="LICENSE.txt" t="Include" />
                 <e p="jquery.validate.unobtrusive.js" t="Include" />
                 <e p="jquery.validate.unobtrusive.min.js" t="Include" />
+                <e p="LICENSE.txt" t="Include" />
+              </e>
+            </e>
+            <e p="Uploads" t="Include">
+              <e p="Journals" t="Include">
+                <e p="637430368376151826-66237305-0bda-4e88-a2a9-65d980efd0c1.pdf" t="Include" />
+                <e p="637430406912872240-a9420e98-8c41-4f53-b442-d64185fb7293.pdf" t="Include" />
+                <e p="637430407209518482-30829601-5a16-4e6a-9e37-b41e3ecf7bfe.pdf" t="Include" />
+                <e p="637432111248831577-c85dce6b-7429-4a37-b8b7-47edb979b3a9.pdf" t="Include" />
+                <e p="637432117853628564-76acd41e-b90e-4b20-8ada-a01ddcef4b0e.pdf" t="Include" />
+                <e p="IJRSTME - Vol. 6 No.2 2020.pdf" t="Include" />
+                <e p="IJRSTME Vol 6. No. 3, 2020.pdf" t="Include" />
               </e>
             </e>
           </e>

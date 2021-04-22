@@ -8,10 +8,9 @@ using System.Threading.Tasks;
 
 namespace Steunijos.Web.Data
 {
-    public class SteunijosContext : IdentityDbContext<ApplicationUser>
+    public class SteunijosContext : IdentityDbContext
     {
-        public SteunijosContext(DbContextOptions<SteunijosContext> options) :
-            base(options)
+        public SteunijosContext(DbContextOptions<SteunijosContext> options) : base(options)
         {
 
         }

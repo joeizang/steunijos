@@ -1,10 +1,10 @@
 ﻿using System;
-using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
+using MySql.EntityFrameworkCore.Metadata;
 
 namespace Steunijos.Web.Migrations
 {
-    public partial class InitialAppData : Migration
+    public partial class InitialAppDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,11 +12,11 @@ namespace Steunijos.Web.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(maxLength: 200, nullable: false),
-                    Name = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    Discriminator = table.Column<string>(nullable: false)
+                    Id = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
+                    Discriminator = table.Column<string>(type: "text", nullable: false),
+                    Name = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -27,42 +27,42 @@ namespace Steunijos.Web.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
-                    UserName = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedUserName = table.Column<string>(maxLength: 256, nullable: true),
-                    Email = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedEmail = table.Column<string>(maxLength: 256, nullable: true),
-                    EmailConfirmed = table.Column<bool>(nullable: false),
-                    PasswordHash = table.Column<string>(nullable: true),
-                    SecurityStamp = table.Column<string>(nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
-                    LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true),
-                    OtherNames = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(nullable: true),
-                    AffiliatedSchool = table.Column<string>(nullable: true),
-                    IsDepartmentMember = table.Column<bool>(nullable: false),
-                    IsHOD = table.Column<bool>(nullable: false),
-                    SpecialtyField = table.Column<string>(nullable: true),
-                    ProfilePhoto = table.Column<string>(nullable: true),
-                    Discriminator = table.Column<string>(nullable: false),
-                    Designation = table.Column<string>(nullable: true),
-                    DepartmentName = table.Column<string>(nullable: true),
-                    FacultyName = table.Column<string>(nullable: true),
-                    UniversityName = table.Column<string>(nullable: true),
-                    PaperAuthor_Designation = table.Column<string>(maxLength: 20, nullable: true),
-                    PaperAuthor_DepartmentName = table.Column<string>(maxLength: 150, nullable: true),
-                    PaperAuthor_FacultyName = table.Column<string>(maxLength: 150, nullable: true),
-                    PaperAuthor_UniversityName = table.Column<string>(maxLength: 150, nullable: true),
-                    IsValidAuthor = table.Column<bool>(nullable: true),
-                    CreatedAt = table.Column<DateTimeOffset>(nullable: true),
-                    UpdatedAt = table.Column<DateTimeOffset>(nullable: true)
+                    Id = table.Column<string>(type: "varchar(767)", nullable: false),
+                    Discriminator = table.Column<string>(type: "text", nullable: false),
+                    Designation = table.Column<string>(type: "text", nullable: true),
+                    DepartmentName = table.Column<string>(type: "text", nullable: true),
+                    FacultyName = table.Column<string>(type: "text", nullable: true),
+                    UniversityName = table.Column<string>(type: "text", nullable: true),
+                    FirstName = table.Column<string>(type: "text", nullable: true),
+                    LastName = table.Column<string>(type: "text", nullable: true),
+                    OtherNames = table.Column<string>(type: "text", nullable: true),
+                    Title = table.Column<string>(type: "text", nullable: true),
+                    AffiliatedSchool = table.Column<string>(type: "text", nullable: true),
+                    IsDepartmentMember = table.Column<bool>(type: "tinyint(1)", nullable: true),
+                    IsHOD = table.Column<bool>(type: "tinyint(1)", nullable: true),
+                    SpecialtyField = table.Column<string>(type: "text", nullable: true),
+                    ProfilePhoto = table.Column<string>(type: "text", nullable: true),
+                    PaperAuthor_Designation = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true),
+                    PaperAuthor_DepartmentName = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: true),
+                    PaperAuthor_FacultyName = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: true),
+                    PaperAuthor_UniversityName = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: true),
+                    IsValidAuthor = table.Column<bool>(type: "tinyint(1)", nullable: true),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamp", nullable: true),
+                    UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp", nullable: true),
+                    UserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
+                    Email = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "varchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    PasswordHash = table.Column<string>(type: "text", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "text", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "text", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "text", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "timestamp", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "tinyint(1)", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -73,14 +73,14 @@ namespace Steunijos.Web.Migrations
                 name: "ContactUsSubmissions",
                 columns: table => new
                 {
-                    SubmissionId = table.Column<string>(nullable: false),
-                    SendersFullName = table.Column<string>(nullable: true),
-                    ReceivingEmailAddress = table.Column<string>(nullable: true),
-                    SubmissionDate = table.Column<DateTimeOffset>(nullable: false),
-                    SendersEmail = table.Column<string>(nullable: true),
-                    MessageSent = table.Column<string>(nullable: true),
-                    MessageType = table.Column<string>(nullable: true),
-                    MessageSubject = table.Column<string>(nullable: true)
+                    SubmissionId = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
+                    SendersFullName = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: false),
+                    ReceivingEmailAddress = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false),
+                    SubmissionDate = table.Column<DateTimeOffset>(type: "timestamp", nullable: false),
+                    SendersEmail = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false),
+                    MessageSent = table.Column<string>(type: "varchar(1500)", maxLength: 1500, nullable: true),
+                    MessageType = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: true),
+                    MessageSubject = table.Column<string>(type: "varchar(200)", maxLength: 200, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -91,14 +91,14 @@ namespace Steunijos.Web.Migrations
                 name: "Journals",
                 columns: table => new
                 {
-                    JournalId = table.Column<string>(maxLength: 150, nullable: false),
-                    IssnNo = table.Column<string>(maxLength: 20, nullable: true),
-                    VolumeName = table.Column<string>(maxLength: 50, nullable: true),
-                    ActualPath = table.Column<string>(maxLength: 300, nullable: true),
-                    SavedPath = table.Column<string>(maxLength: 300, nullable: true),
-                    CopyrightYear = table.Column<DateTimeOffset>(nullable: false),
-                    CreatedAt = table.Column<DateTimeOffset>(nullable: false),
-                    JournalContentId = table.Column<string>(maxLength: 150, nullable: true)
+                    JournalId = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false),
+                    IssnNo = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: true),
+                    VolumeName = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
+                    ActualPath = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: true),
+                    SavedPath = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: true),
+                    CopyrightYear = table.Column<DateTimeOffset>(type: "timestamp", nullable: true),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamp", nullable: false),
+                    JournalContentId = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -109,8 +109,8 @@ namespace Steunijos.Web.Migrations
                 name: "SubjectArea",
                 columns: table => new
                 {
-                    SubjectAreaId = table.Column<string>(nullable: false),
-                    SubjectAreaName = table.Column<string>(nullable: true)
+                    SubjectAreaId = table.Column<string>(type: "varchar(767)", nullable: false),
+                    SubjectAreaName = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -121,11 +121,11 @@ namespace Steunijos.Web.Migrations
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    RoleId = table.Column<string>(nullable: false),
-                    ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    RoleId = table.Column<string>(type: "varchar(200)", nullable: false),
+                    ClaimType = table.Column<string>(type: "text", nullable: true),
+                    ClaimValue = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -142,11 +142,11 @@ namespace Steunijos.Web.Migrations
                 name: "AspNetUserClaims",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    UserId = table.Column<string>(nullable: false),
-                    ClaimType = table.Column<string>(nullable: true),
-                    ClaimValue = table.Column<string>(nullable: true)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    UserId = table.Column<string>(type: "varchar(767)", nullable: false),
+                    ClaimType = table.Column<string>(type: "text", nullable: true),
+                    ClaimValue = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -163,10 +163,10 @@ namespace Steunijos.Web.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
-                    ProviderDisplayName = table.Column<string>(nullable: true),
-                    UserId = table.Column<string>(nullable: false)
+                    LoginProvider = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
+                    ProviderKey = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
+                    ProviderDisplayName = table.Column<string>(type: "text", nullable: true),
+                    UserId = table.Column<string>(type: "varchar(767)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -183,8 +183,8 @@ namespace Steunijos.Web.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false)
+                    UserId = table.Column<string>(type: "varchar(767)", nullable: false),
+                    RoleId = table.Column<string>(type: "varchar(200)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -207,10 +207,10 @@ namespace Steunijos.Web.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(nullable: false),
-                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
-                    Name = table.Column<string>(maxLength: 128, nullable: false),
-                    Value = table.Column<string>(nullable: true)
+                    UserId = table.Column<string>(type: "varchar(767)", nullable: false),
+                    LoginProvider = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
+                    Name = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
+                    Value = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -227,12 +227,13 @@ namespace Steunijos.Web.Migrations
                 name: "Payments",
                 columns: table => new
                 {
-                    PaperPaymentId = table.Column<string>(maxLength: 150, nullable: false),
-                    TellerNumber = table.Column<string>(maxLength: 150, nullable: true),
-                    AmountPaid = table.Column<decimal>(nullable: false),
-                    AuthorName = table.Column<string>(maxLength: 150, nullable: true),
-                    PaymentDate = table.Column<DateTimeOffset>(nullable: false),
-                    PaperAuthorId = table.Column<string>(nullable: true)
+                    PaperPaymentId = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false),
+                    TellerNumber = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: true),
+                    AmountPaid = table.Column<decimal>(type: "decimal(12,2)", nullable: false),
+                    AuthorName = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: true),
+                    PaymentDate = table.Column<DateTimeOffset>(type: "timestamp", nullable: true),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamp", nullable: false),
+                    PaperAuthorId = table.Column<string>(type: "varchar(767)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -249,11 +250,11 @@ namespace Steunijos.Web.Migrations
                 name: "JournalContents",
                 columns: table => new
                 {
-                    JournalContentId = table.Column<string>(maxLength: 150, nullable: false),
-                    ContentTitle = table.Column<string>(maxLength: 150, nullable: true),
-                    AuthorId = table.Column<string>(nullable: true),
-                    JournalPosition = table.Column<int>(nullable: false),
-                    JournalId = table.Column<string>(maxLength: 150, nullable: true)
+                    JournalContentId = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false),
+                    ContentTitle = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: true),
+                    AuthorId = table.Column<string>(type: "varchar(767)", nullable: true),
+                    JournalPosition = table.Column<int>(type: "int", nullable: false),
+                    JournalId = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -276,18 +277,18 @@ namespace Steunijos.Web.Migrations
                 name: "Papers",
                 columns: table => new
                 {
-                    PaperId = table.Column<string>(maxLength: 150, nullable: false),
-                    Title = table.Column<string>(maxLength: 50, nullable: true),
-                    SavedPath = table.Column<string>(maxLength: 300, nullable: true),
-                    AuthorName = table.Column<string>(maxLength: 150, nullable: true),
-                    PaperOriginalName = table.Column<string>(maxLength: 250, nullable: true),
-                    ActualPath = table.Column<string>(maxLength: 300, nullable: true),
-                    SubjectAreaId = table.Column<string>(maxLength: 150, nullable: true),
-                    PaperTopic = table.Column<string>(maxLength: 250, nullable: true),
-                    JournalId = table.Column<string>(maxLength: 150, nullable: true),
-                    CreatedAt = table.Column<DateTimeOffset>(nullable: false),
-                    UpdatedAt = table.Column<DateTimeOffset>(nullable: false),
-                    ThumbnailPath = table.Column<string>(maxLength: 300, nullable: true)
+                    PaperId = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: false),
+                    Title = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: true),
+                    SavedPath = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: true),
+                    AuthorName = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: true),
+                    PaperOriginalName = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
+                    ActualPath = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: true),
+                    SubjectAreaId = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: true),
+                    PaperTopic = table.Column<string>(type: "varchar(250)", maxLength: 250, nullable: true),
+                    JournalId = table.Column<string>(type: "varchar(150)", maxLength: 150, nullable: true),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "timestamp", nullable: false),
+                    UpdatedAt = table.Column<DateTimeOffset>(type: "timestamp", nullable: true),
+                    ThumbnailPath = table.Column<string>(type: "varchar(300)", maxLength: 300, nullable: true)
                 },
                 constraints: table =>
                 {

@@ -17,6 +17,7 @@ using Steunijos.Web.ViewModels.Journal;
 
 namespace Steunijos.Web.Controllers
 {
+    [Authorize]
     public class JournalsController : Controller
     {
         private readonly SteunijosContext _db;
@@ -33,18 +34,23 @@ namespace Steunijos.Web.Controllers
             ShowJournalVM = new List<ShowJournalViewModel>();
         }
         // GET: Journal
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
-            var result = await _db.Journals.AsNoTracking()
-                .Select(j => new JournalReadModel
-                {
-                    IssnNo = j.IssnNo,
-                    CopyrightYear = j.CopyrightYear,
-                    VolumeName = j.VolumeName
-                }).ToListAsync()
-                .ConfigureAwait(false);
 
-            return View(result);
+            var journals = new List<JournalReadModel>();
+
+            foreach (var journal in _db.Journals.AsNoTracking())
+            {
+                if (journal.CopyrightYear != null)
+                    journals.Add(new JournalReadModel
+                    {
+                        IssnNo = journal.IssnNo,
+                        CopyrightYear = journal.CopyrightYear.Value,
+                        VolumeName = journal.VolumeName
+                    });
+            }
+
+            return View(journals);
         }
 
         // GET: Journal/Details/5
@@ -79,7 +85,7 @@ namespace Steunijos.Web.Controllers
             ShowJournalVM = await _db.Journals.AsNoTracking()
                 .Select(j => new ShowJournalViewModel
                 {
-                    JournalYear = j.CopyrightYear,
+                    JournalYear = j.CopyrightYear.Value,
                     ActualFileName = Path.GetFileName(j.ActualPath),
                     JournalVolumeName = j.VolumeName,
                     JournalISSN = j.IssnNo

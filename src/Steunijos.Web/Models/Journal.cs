@@ -8,7 +8,8 @@ namespace Steunijos.Web.Models
 {
     public class Journal
     {
-        [Key] [StringLength(150)] public string JournalId { get; set; } = Guid.NewGuid().ToString();
+        [Key] [StringLength(150)] 
+        public string JournalId { get; set; } = Guid.NewGuid().ToString("D");
 
         [StringLength(20)]
         public string IssnNo { get; set; }
@@ -22,9 +23,9 @@ namespace Steunijos.Web.Models
         [StringLength(300)]
         public string SavedPath { get; set; }
 
-        public DateTimeOffset CopyrightYear { get; set; }
+        public DateTimeOffset? CopyrightYear { get; set; }
 
-        public DateTimeOffset CreatedAt { get; set; }
+        public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow.LocalDateTime;
 
         public JournalContent TableOfContents { get; set; }
 

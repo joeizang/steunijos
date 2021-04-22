@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Steunijos.Web.Data;
 using Steunijos.Web.ViewModels.Paper;
@@ -18,6 +19,7 @@ using Steunijos.Web.SteunijosServices;
 
 namespace Steunijos.Web.Controllers
 {
+    [Authorize]
     public class PapersController : Controller
     {
         private readonly IWebHostEnvironment _env;
