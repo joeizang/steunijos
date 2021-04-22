@@ -1,0 +1,13 @@
+version: "3.9"
+services:
+  steunijos:
+    image: mysql:8.0
+    restart: always
+    env_file:
+      - dbservice.env
+    volumes:
+      - mysql-data:/var/lib/mysql
+    ports:
+      - 3308:3308
+volumes:
+  mysql-data: {}

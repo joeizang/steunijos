@@ -27,7 +27,8 @@ namespace Steunijos.Domain.DomainModels
 
         public JournalContent TableOfContents { get; set; }
 
-        [StringLength(150)]
-        public string JournalContentId { get; set; }
+        public int JournalContentId { get; set; }
+
+        public List<Paper> Papers { get; set; }
     }
 }

@@ -16,8 +16,9 @@ namespace Steunijos.Domain.DomainModels
         [StringLength(300)]
         public string SavedPath { get; set; }
 
-        [StringLength(150)]
-        public string AuthorName { get; set; }
+        public List<PaperAuthor> Authors { get; set; }
+
+        public List<AuthorsPapers> AuthorsPapers { get; set; }
 
         [StringLength(250)]
         public string PaperOriginalName { get; set; }
@@ -29,7 +30,9 @@ namespace Steunijos.Domain.DomainModels
         public string PaperTopic { get; set; }
 
         [StringLength(150)]
-        public string JournalId { get; set; }
+        public int JournalId { get; set; }
+
+        public Journal Journal { get; set; }
         
         [StringLength(300)]
         public string ThumbnailPath { get; set; }

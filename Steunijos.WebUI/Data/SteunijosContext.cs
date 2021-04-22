@@ -29,7 +29,35 @@ namespace Steunijos.WebUI.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            
+            builder.Entity<PaperAuthor>()
+                .HasMany(a => a.Payments)
+                .WithOne()
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<AuthorsPapers>()
+                .HasOne(p => p.Paper)
+                .WithMany(p => p.AuthorsPapers)
+                .HasForeignKey(x => x.PaperId);
+            builder.Entity<AuthorsPapers>()
+                .HasOne(ap => ap.PaperAuthor)
+                .WithMany(pa => pa.AuthorsPapers)
+                .HasForeignKey(x => x.PaperAuthorId);
+            builder.Entity<AuthorsPapers>()
+                .HasKey(k => new {k.PaperAuthorId, k.PaperId});
+                
+
+            builder.Entity<Journal>()
+                .HasOne(j => j.TableOfContents)
+                .WithOne(j => j.Journal)
+                .HasForeignKey<JournalContent>(j => j.JournalId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Journal>()
+                .HasMany(j => j.Papers)
+                .WithOne(p => p.Journal)
+                .HasForeignKey(x => x.JournalId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

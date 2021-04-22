@@ -26,5 +26,9 @@ namespace Steunijos.Domain.DomainModels
 
         public List<PaperPayment> Payments { get; set; }
 
+        public List<Paper> Papers { get; set; }
+
+        public List<AuthorsPapers> AuthorsPapers { get; set; }
+        
     }
 }
