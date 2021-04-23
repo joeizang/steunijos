@@ -17,6 +17,7 @@ using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.FileProviders;
 using Steunijos.WebUI.Models;
 using Microsoft.AspNetCore.Http;
+using Steunijos.WebUI.Extensions;
 
 namespace Steunijos.WebUI
 {
@@ -40,6 +41,7 @@ namespace Steunijos.WebUI
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<SteunijosContext>();
             services.AddControllersWithViews();
+            services.AddSteUserOptions();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
