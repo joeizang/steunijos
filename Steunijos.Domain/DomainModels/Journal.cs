@@ -4,10 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Steunijos.Domain.Abstractions;
 
 namespace Steunijos.Domain.DomainModels
 {
-    public class Journal
+    public class Journal : BaseDomainModel
     {
         [StringLength(20)]
         public string IssnNo { get; set; }
@@ -22,8 +23,6 @@ namespace Steunijos.Domain.DomainModels
         public string SavedPath { get; set; }
 
         public DateTimeOffset? CopyrightYear { get; set; }
-
-        public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow.LocalDateTime;
 
         public JournalContent TableOfContents { get; set; }
 

@@ -29,6 +29,8 @@ namespace Steunijos.WebUI.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
+
             builder.Entity<PaperAuthor>()
                 .HasMany(a => a.Payments)
                 .WithOne()

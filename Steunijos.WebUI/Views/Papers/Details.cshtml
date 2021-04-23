@@ -1,0 +1,61 @@
+﻿@model Steunijos.Web.ViewModels.Paper.PaperDetailsViewModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>PaperDetailsViewModel</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PaperId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PaperId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SavedPath)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SavedPath)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.AuthorName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.AuthorName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PaperOriginalName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PaperOriginalName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SubjectArea)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SubjectArea)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.JournalId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.JournalId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ThumbnailPath)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ThumbnailPath)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.PaperId }) |
+    <a asp-action="Index">Back to List</a>
+</div>
