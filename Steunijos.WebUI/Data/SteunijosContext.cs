@@ -14,6 +14,7 @@ namespace Steunijos.WebUI.Data
         {
         }
 
+        public DbSet<ContactUsSubmission> ContactUsSubmissions { get; set; }
         public DbSet<Paper> Papers { get; set; }
 
         public DbSet<Editor> Editors { get; set; }

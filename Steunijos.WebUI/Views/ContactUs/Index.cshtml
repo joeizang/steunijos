@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Steunijos.WebUI.ViewModels.ContactUs.ContactUsViewModel>
+
+
+
+<section class="section" style="margin-top: 30px;">
+    <div class="container">
+        <div class="row justify-content-center mb-4">
+            <div class="col-md-8 col-lg-6 text-center">
+                <h2 class="section-title mb-2">Messages sent so far.</h2>
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <table class="table">
+                <thead>
+                
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.SubmissionDate)</th>
+                    <th>@Html.DisplayNameFor(model => model.FullName)</th>
+                    <th>@Html.DisplayNameFor(model => model.MessageType)</th>
+                    <th>@Html.DisplayNameFor(model => model.EmailAddress)</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach (var contactItem in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => contactItem.SubmissionDate)</td>
+                        <td>@Html.DisplayFor(modelItem => contactItem.FullName)</td>
+                        <td>@Html.DisplayFor(modelItem => contactItem.MessageType)</td>
+                        <td>@Html.DisplayFor(modelItem => contactItem.EmailAddress)</td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@contactItem.SubmissionId" class="btn btn-primary">Details</a>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

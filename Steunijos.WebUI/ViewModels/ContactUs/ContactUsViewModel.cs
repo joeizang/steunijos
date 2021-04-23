@@ -9,7 +9,7 @@ namespace Steunijos.WebUI.ViewModels.ContactUs
     {
         public string FullName { get; set; }
 
-        public string SubmissionId { get; set; }
+        public int SubmissionId { get; set; }
 
         public string SubmittedMessage { get; set; }
 

@@ -1,0 +1,52 @@
+﻿@using Steunijos.Domain.DomainModels
+@model Steunijos.WebUI.ViewModels.ContactUs.ContactUsInputModel
+
+@{
+    ViewBag.Title = "Send Us a Message";
+    Layout = "_Layout";
+}
+
+
+<section class="section">
+    <h1 style="margin-top: 30px; margin-left: 30px;">@ViewBag.Title</h1>
+    <hr />
+    <div class="container">
+        <div class="row">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="text-danger">@ViewBag.ErrorMessage</div>
+            <div class="col-md-8">
+                <form asp-action="SendContact" id="contactUsForm">
+                    <div class="form-group">
+                        <label for="" class="control-label"></label>
+                        <input type="hidden" name="MessageId" asp-for="MessageId">
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="control-label"></label>
+                        <input type="text" name="FullName" class="form-control rounded formcontrolste" placeholder="John Doe.." />
+                        <span asp-validation-for="FullName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="control-label"></label>
+                        <input type="text" name="EmailAddress" class="form-control rounded formcontrolste" placeholder="example@example.com" />
+                        <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="control-label"></label>
+                        <select name="MessageType" asp-for="MessageType" asp-items="@Html.GetEnumSelectList<MessageType>()"
+                                class="form-control rounded formcontrolste">
+                            <option value="" selected="selected" class="rounded">Select Type of Message</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="control-label" />
+                        <textarea name="Message" id="" cols="100" rows="10" asp-for="Message"
+                                  class="form-control rounded formcontrolste"></textarea>
+                        <span asp-validation-for="Message" class="text-danger"></span>
+                    </div>
+
+                    <input type="submit" value="Send" class="btn btn-primary rounded" style="font-weight: bold; font-size: large;">
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
